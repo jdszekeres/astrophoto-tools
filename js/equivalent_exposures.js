@@ -37,6 +37,8 @@ apertureCheckbox.addEventListener('change', () => {
         shutterSpeedCheckbox.checked = false;
 
         equivalentExposureTriangle.aperture = NaN;
+        equivalentExposureTriangle.shutterSpeed = equivalentShutterSpeedOutput.value.includes('/') ? equivalentShutterSpeedOutput.value.split('/').map(Number).reduce((a, b) => a / b) : equivalentShutterSpeedOutput.value;
+        equivalentExposureTriangle.iso = parseInt(equivalentIsoOutput.value);
     } else {
         equivalentApertureOutput.disabled = false;
     }
@@ -55,6 +57,8 @@ shutterSpeedCheckbox.addEventListener('change', () => {
         isoCheckbox.checked = false;
 
         equivalentExposureTriangle.shutterSpeed = NaN;
+        equivalentExposureTriangle.iso = parseInt(equivalentIsoOutput.value);
+        equivalentExposureTriangle.aperture = parseFloat(equivalentApertureOutput.value);
     } else {
         equivalentShutterSpeedOutput.disabled = false;
     }
@@ -72,6 +76,8 @@ isoCheckbox.addEventListener('change', () => {
         shutterSpeedCheckbox.checked = false;
 
         equivalentExposureTriangle.iso = NaN;
+        equivalentExposureTriangle.shutterSpeed = equivalentShutterSpeedOutput.value.includes('/') ? equivalentShutterSpeedOutput.value.split('/').map(Number).reduce((a, b) => a / b) : equivalentShutterSpeedOutput.value;
+        equivalentExposureTriangle.aperture = parseFloat(equivalentApertureOutput.value);
     }
     else {
         equivalentIsoOutput.disabled = false;
