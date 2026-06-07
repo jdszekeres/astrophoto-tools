@@ -53,23 +53,21 @@ class NightSky {
     }
 
     _latLonToPixel(lat, lon) {
-    const W = 9354;
-    const H = 4252;
+        const W = this.canvas.width;
+        const H = this.canvas.height;
 
-    // longitude fit (from regression)
-    const x = (lon + 126.44) / 0.03382;
+        // longitude fit (from regression)
+        const x = (lon + 126.44) / 0.03382;
 
-    // latitude fit
-    const y = (-20.28 * lat) + 1862.4;
+        // latitude fit
+        const y = (-20.28 * lat) + 1862.4;
 
-    return { x, y };
-}
-
-
+        return { x, y };
+    }
 
     getBrightness(lat, lon) {
         //convert lat and lon to pixel coordinates
-        const { x, y } = this._latLonToPixel(lat, lon, this.canvas.width, this.canvas.height);
+        const { x, y } = this._latLonToPixel(lat, lon);
 
         console.log('Getting brightness for lat:', lat, 'lon:', lon, 'pixel coordinates:', x, y);
 
@@ -96,5 +94,34 @@ class NightSky {
         if (sqm >= 18.75) return 7;
         if (sqm >= 18.25) return 8;
         return 9;
+    }
+
+    getImageOfCoordinate(lat, lon) {
+        const size = 150; // size of the square to extract
+
+        const { x, y } = this._latLonToPixel(lat, lon);
+        const tempCanvas = document.createElement('canvas');
+        const tempCtx = tempCanvas.getContext('2d');
+        tempCanvas.width = size;
+        tempCanvas.height = size;
+        tempCtx.drawImage(this.canvas, x - size/2, y - size/2, size, size, 0, 0, size, size);
+        tempCtx.beginPath();
+        tempCtx.strokeStyle = 'black';
+        tempCtx.lineWidth = 2;
+        tempCtx.arc(size/2, size/2, 10, 0, 2 * Math.PI);
+        tempCtx.closePath();
+        tempCtx.stroke();
+        tempCtx.beginPath();
+        tempCtx.strokeStyle = 'white';
+        tempCtx.lineWidth = 2;
+        tempCtx.arc(size/2, size/2, 12, 0, 2 * Math.PI);
+        tempCtx.closePath();
+        tempCtx.stroke();
+        tempCtx.beginPath();
+        tempCtx.strokeStyle = 'black';
+        tempCtx.lineWidth = 2;
+        tempCtx.arc(size/2, size/2, 14, 0, 2 * Math.PI);
+        tempCtx.stroke();
+        return tempCanvas.toDataURL();
     }
 }

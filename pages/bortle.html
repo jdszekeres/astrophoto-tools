@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bortle Scale</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/bortle.css">
     <script src="/js/components/navbar.js"></script>
 </head>
 <body>
@@ -17,6 +18,15 @@
                 <input type="number" id="lon" placeholder="Longitude" step="any" required>
                 <button type="submit" id="submitbutton">Get Bortle Scale</button>
             </form>
+
+            <br>
+
+            <div id="result">
+                <h2>Bortle Scale: <span id="bortle-value">-</span></h2>
+                <h2>Sky Brightness: <span id="brightness-value">-</span> mag/arcsec²</h2>
+
+                <img id="sky-image" src="" alt="Sky Image" style="display: none; width: 300px; height: 300px;">
+            </div>
         </div>
     </div>
 </body>

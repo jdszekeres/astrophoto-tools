@@ -9,5 +9,11 @@ document.getElementById('submitbutton').addEventListener('click', async (event) 
 
     const sqm = await nightSky.getBrightness(lat, lon);
     const bortleClass = nightSky.getBortleClass(sqm);
-    alert(`Bortle Class: ${bortleClass}\nSky Brightness (SQM): ${sqm.toFixed(2)}`);
+
+    document.getElementById('bortle-value').textContent = bortleClass;
+    document.getElementById('brightness-value').textContent = sqm.toFixed(2);
+
+    const skyImage = document.getElementById('sky-image');
+    skyImage.src = nightSky.getImageOfCoordinate(lat, lon);
+    skyImage.style.display = 'block';
 });
