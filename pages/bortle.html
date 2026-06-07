@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bortle Scale</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/components/navbar.js"></script>
+</head>
+<body>
+    <div class="container">
+        <nav-bar page="bortle"></nav-bar>
+
+        <div class="content">
+            <form>
+                <input type="number" id="lat" placeholder="Latitude" step="any" required>
+                <input type="number" id="lon" placeholder="Longitude" step="any" required>
+                <button type="submit" id="submitbutton">Get Bortle Scale</button>
+            </form>
+        </div>
+    </div>
+</body>
+<script src="/js/night_sky.js"></script>
+<script src="/js/bortle.js"></script>
+</html>
