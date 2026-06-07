@@ -11,6 +11,10 @@ document.getElementById('submitbutton').addEventListener('click', async (event) 
     const bortleClass = nightSky.getBortleClass(sqm);
 
     document.getElementById('bortle-value').textContent = bortleClass;
+    document.getElementById('bortle-value').style.textDecoration = `underline blue`;
+    document.getElementById('bortle-value').onclick = () => {
+        window.location.href = `/pages/bortle_reference.html?bortle=${bortleClass}`;
+    };
     document.getElementById('brightness-value').textContent = sqm.toFixed(2);
 
     const skyImage = document.getElementById('sky-image');

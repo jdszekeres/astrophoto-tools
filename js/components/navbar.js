@@ -54,7 +54,8 @@ class Navbar extends HTMLElement {
             <ul>
                 <li><a href="/index.html" class="${this.page === 'home' ? 'active' : ''}">Home</a></li>
                 <li><a href="/pages/equivalent_exposures.html" class="${this.page === 'ee' ? 'active' : ''}">Equivalent Exposures</a></li>
-                <li><a href="/pages/bortle.html" class="${this.page === 'bortle' ? 'active' : ''}">Bortle Scale</a></li>
+                <li><a href="/pages/bortle.html" class="${this.page === 'bortle' ? 'active' : ''}">Bortle Scale Finder</a></li>
+                <li><a href="/pages/bortle_reference.html" class="${this.page === 'bortle_reference' ? 'active' : ''}">Bortle Scale Reference</a></li>
             </ul>
         </nav>
         `
