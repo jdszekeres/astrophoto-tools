@@ -10,7 +10,7 @@ class Navbar extends HTMLElement {
             nav {
                 background-color: #333;
                 overflow: hidden;
-                width: 20vw;
+                width: 15vw;
                 height: 100vh;
 
                 position: fixed;
@@ -38,12 +38,15 @@ class Navbar extends HTMLElement {
                 text-decoration: none;
                 display: block;
             }
+
+            .active {
+                background-color: #4CAF50;
+                }
         </style>
         <nav>
             <ul>
-                <li><a href="index.html" class="${this.page === 'home' ? 'active' : ''}">Home</a></li>
-                <li><a href="tools.html" class="${this.page === 'tools' ? 'active' : ''}">Tools</a></li>
-                <li><a href="about.html" class="${this.page === 'about' ? 'active' : ''}">About</a></li>
+                <li><a href="/index.html" class="${this.page === 'home' ? 'active' : ''}">Home</a></li>
+                <li><a href="/pages/equivalent_exposures.html" class="${this.page === 'ee' ? 'active' : ''}">Equivalent Exposures</a></li>
             </ul>
         </nav>
         `

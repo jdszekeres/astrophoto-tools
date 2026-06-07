@@ -19,5 +19,10 @@ html, body {
     flex: 1;
     padding: 20px;
     overflow-y: auto;
-    width: 80vw;
+    width: 85vw;
+}
+
+h1 {
+    width: 100%;
+    text-align: center;
 }

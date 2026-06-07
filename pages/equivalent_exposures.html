@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="../manifest.json">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/ee.css">
+    <title>Equivalent Exposures</title>
+</head>
+<body>
+    <div class="container">
+        <nav-bar page="ee"></nav-bar>
+
+        <div class="content">
+            <h1>Equivalent Exposures</h1>
+            <hr />
+            <h2>Input your current settings:</h2>
+            <div id="ee_first">
+                <input type="text" id="ee_exposure_time" placeholder="Exposure Time (s)" pattern="1\/\d+|^\d+$" value="1/125" />
+                <input type="number" id="ee_iso" placeholder="ISO" value="100" />
+                <input type="number" id="ee_aperture" placeholder="Aperture (f/)" value="8" />
+
+            </div>
+            <h2>Calculate equivalent exposures:</h2>
+            <div id="ee_second">
+                <div>
+                    <input type="checkbox" id="ee_exposure_time_checkbox" checked />
+                    <label for="ee_exposure_time_checkbox">Generate Equivalent Exposure Time</label>
+                    <br>
+                    <input type="text" id="ee_exposure_time_2" placeholder="Exposure Time (s)" disabled pattern="1\/\d+|^\d+$" value="1/125" />
+                </div>
+
+                <div>
+                    <input type="checkbox" id="ee_iso_checkbox" />
+                    <label for="ee_iso_checkbox">Generate Equivalent ISO</label>
+                    <br>
+                    <input type="number" id="ee_iso_2" placeholder="ISO" value="100" />
+                </div>
+                <div>
+                    <input type="checkbox" id="ee_aperture_checkbox" />
+                    <label for="ee_aperture_checkbox">Generate Equivalent Aperture</label>
+                    <br>
+                    <input type="number" id="ee_aperture_2" placeholder="Aperture (f/)" value="8" />
+                </div>
+            </div>
+
+        </div>
+        </div>
+    </div>
+</body>
+<script src="../js/components/navbar.js"></script>
+<script src="/js/exposure.js"></script>
+<script src="/js/equivalent_exposures.js"></script>
+</html>
