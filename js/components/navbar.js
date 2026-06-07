@@ -1,10 +1,17 @@
 class Navbar extends HTMLElement {
     constructor() {
         super();
-        this.page = "";
+        this.page = this.getAttribute('page') || '';
     }
 
     connectedCallback() {
+        this.page = this.getAttribute('page') || '';
+        this.render();
+        this.style.display = 'block';
+        this.style.width = '20vw';
+    }
+    render() {
+        console.log('Rendering Navbar with page:', this.page);
         this.innerHTML = `
         <style>
             nav {
@@ -50,13 +57,21 @@ class Navbar extends HTMLElement {
             </ul>
         </nav>
         `
-        this.style.display = 'block';
-        this.style.width = '20vw';
+
     }
 
     static get observedAttributes() {
         return ['page'];
     }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+        if (name === 'page') {
+            this.page = newValue;
+            this.render(); // Re-render the component to update the active link
+        }
+    }
+
+
 
 }
 
