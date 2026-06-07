@@ -5,6 +5,7 @@ form {
     flex-direction: row;
     gap: 20px;
     margin: 20px auto;
+    flex-wrap: wrap;
 }
 
 input {
@@ -22,6 +23,13 @@ button[type="submit"] {
     padding: 20px;
     border-radius: 4px;
     font-size: 16px;
+}
 
-
+#current-location-button {
+    width: 50%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: transparent;
 }

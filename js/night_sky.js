@@ -19,14 +19,13 @@ class NightSky {
     }
 
     legend = [
-    { rgb: [0, 0, 0],     ratio: 0.5 },
-    { rgb: [30, 60, 120], ratio: 1.5 },
-    { rgb: [0, 120, 255], ratio: 4 },
-    { rgb: [0, 255, 180], ratio: 12 },
-    { rgb: [255, 255, 0], ratio: 24 },
-    { rgb: [255, 150, 0], ratio: 48 },
-    { rgb: [255, 0, 0], ratio: 96 },
-    { rgb: [255, 255, 255], ratio: 200 }
+    { rgb: [14.9, 14.9, 14.9], ratio: 0.11 },
+    { rgb: [0, 0, 255], ratio: 0.22 },
+    { rgb: [0, 255, 0], ratio: 0.67 },
+    { rgb: [255, 255, 0], ratio: 2 },
+    { rgb: [255, 137, 0], ratio: 6 },
+    { rgb: [255, 0, 0], ratio: 9 },
+    { rgb: [255, 255, 255], ratio: 40 }
     ];
 
     _colorDistance(a, b) {
