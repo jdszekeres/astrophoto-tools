@@ -8,6 +8,9 @@ class PageItem extends HTMLElement {
 
     connectedCallback() {
         this.render();
+        this.style.display = 'block';
+        this.style.width = 'min(30vw, 30vh)';
+        this.style.height = 'min(30vw, 30vh)';
     }
 
     render() {
@@ -18,10 +21,23 @@ class PageItem extends HTMLElement {
                 border-radius: 5px;
                 padding: 10px;
                 margin: 10px 0;
-                width: 30%;
-                height: 30%;
-                
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
             }
+            .page-item h2 {
+                margin: 0px;
+            }
+
+            .page-item p {
+                margin: 0px;
+            }
+
+            .page-item a {
+                display: inline-block;
+                margin: 0px;
         </style>
         <div class="page-item">
             <h2>${this.name}</h2>
