@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sun and Moon Rise</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/sun_and_moon_rise.css">
+    <script src="/js/components/navbar.js"></script>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="/icons/icon-192x192.png" type="image/png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-180x180.png">
+</head>
+<body>
+    <div class="container">
+        <nav-bar page="sun_and_moon_rise"></nav-bar>
+
+        <div class="content">
+            <div id="inputs_container">
+                <input type="number" id="lat" placeholder="Latitude" step="any" required>
+                <input type="number" id="lon" placeholder="Longitude" step="any" required>
+                <input type="date" id="date" required>
+                <div class="br"></div>
+                <button id="current-location-button">Use Current Location</button>
+                <div class="br"></div>
+                <button id="submit-button">Get Sun and Moon Rise Times</button>
+            </div>
+
+            <div id="results_container" style="display: none;">
+                <h2>Results</h2>
+                <div class="br"></div>
+                <p>Sunrise: <span id="sunrise"></span></p>
+                <p>Sunset: <span id="sunset"></span></p>
+                <p>Night Start: <span id="night_start"></span></p>
+                <p>Night End: <span id="night_end"></span></p>
+                <div class="br"></div>
+                <p>Moonrise: <span id="moonrise"></span></p>
+                <p>Moonset: <span id="moonset"></span></p>
+                <p>Moon Phase: <span id="moonphase"></span></p>
+                <p>Moon Illumination: <span id="moonillumination"></span></p>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="/js/libraries/suncalc.js"></script>
+<script src="/js/sun_and_moon_rise.js"></script>
+</html>

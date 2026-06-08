@@ -42,7 +42,7 @@ class PageItem extends HTMLElement {
         <div class="page-item">
             <h2>${this.name}</h2>
             <p>${this.description}</p>
-            <a href="${this.link}">Go to page</a>
+            <a href="pages/${this.link}">Go to page</a>
         </div>
         `
     }

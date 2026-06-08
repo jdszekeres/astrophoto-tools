@@ -6,13 +6,21 @@
     justify-content: space-around;
 }
 
-#ee_second > div {
+.br {
+    flex-basis: 100%;
+    width: 100%;
+    height: 0;
+    display: block;
+}
+
+#ee_first > div, #ee_second > div {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
+    align-items: start;
+    flex-wrap: wrap;
 }
+
 
 h2 {
     text-align: center;
