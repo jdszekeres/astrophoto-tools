@@ -19,11 +19,12 @@ class Navbar extends HTMLElement {
     connectedCallback() {
         this.page = this.getAttribute('page') || '';
         this.render();
+        this.renderRedLightMode();
         this.style.display = 'block';
         this.style.width = '20vw';
     }
     render() {
-        console.log('Rendering Navbar with page:', this.page);
+        this.renderRedLightMode();
         this.innerHTML = `
         <style>
             nav {
@@ -66,7 +67,7 @@ class Navbar extends HTMLElement {
                 background-color: #4CAF50;
                 }
 
-                #install_button {
+                #install_button, #red_light_button {
                 margin: 20px;
                 padding: 10px;
                 background-color: #4CAF50;
@@ -74,6 +75,11 @@ class Navbar extends HTMLElement {
                 border: none;
                 border-radius: 5px;
                 cursor: pointer;
+            }
+
+            #buttons {
+                display: flex;
+                flex-direction: column;
             }
         </style>
         <nav>
@@ -85,10 +91,24 @@ class Navbar extends HTMLElement {
                 <li><a href="/pages/sun_and_moon_rise.html" class="${this.page === 'sun_and_moon_rise' ? 'active' : ''}">Sun and Moon Position</a></li>
                 <li><a href="/pages/400rule.html" class="${this.page === '400rule' ? 'active' : ''}">400 Rule</a></li>
             </ul>
-            
-            <button id="install_button" style="display:none;">Install App for Offline Use</button>
+
+            <div id="buttons">
+                <button id="red_light_button">Red Light Mode</button>
+                <button id="install_button" style="display:none;">Install App for Offline Use</button>
+            </div>
         </nav>
         `
+
+        setTimeout(() => {
+            this.addEventListeners();
+        }, 0);
+    }
+    addEventListeners() {
+        document.getElementById('red_light_button').addEventListener('click', () => {
+            const isRedLightMode = localStorage.getItem('redLightMode') === 'true';
+            localStorage.setItem('redLightMode', !isRedLightMode);
+            this.renderRedLightMode();
+        });
 
         document.getElementById('install_button').addEventListener('click', () => {
             if (this.installPromptEvent) {
@@ -114,6 +134,23 @@ class Navbar extends HTMLElement {
             this.render(); // Re-render the component to update the active link
         }
     }
+
+
+    renderRedLightMode() {
+            const isRedLightMode = localStorage.getItem('redLightMode') === 'true';
+
+            if (isRedLightMode) {
+                const link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.href = '/css/redlight.css';
+                document.head.appendChild(link);
+            } else {
+                const existingLink = document.querySelector('link[href="/css/redlight.css"]');
+                if (existingLink) {
+                    existingLink.remove();
+                }
+            }
+        }
 
 
 

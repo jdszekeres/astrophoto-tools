@@ -1,0 +1,82 @@
+body {
+    color: black;
+    background-color: #800000;
+}
+
+.content {
+    background-color: #800000;
+}
+
+.active {
+    background-color: #800000 !important;
+    border: black 1px solid !important;
+    margin: 5px !important;
+    border-radius: 5px !important;
+}
+
+button {
+    background-color: #800000 !important;
+    border: black 1px solid !important;
+    color: black !important;
+}
+
+input {
+    background-color: #800000;
+    border: black 1px solid;
+    color: black;
+}
+
+input::placeholder {
+    color: black;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+  appearance: textfield; /* Standard property for modern systems */
+}
+
+input[type=checkbox] {
+    accent-color: #800000;
+    outline: black 1px solid;
+    width: 1em;
+    height: 1em;
+}
+
+input[type="checkbox"]:not(:checked) {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 13px;
+  height: 13px;
+  border: 1px solid black;
+  background-color: #800000; /* Your choice of unchecked color */
+  border-radius: 3px;
+}
+
+hr {
+    display: none;
+}
+
+nav {
+    color: black !important;
+    background-color: #800000 !important;
+    border-right: 1px solid black;
+}
+
+nav > ul > li > a {
+    color: black !important;
+}
+
+a {
+    color: black !important;
+}
+
+.page-item {
+    border: black 1px solid !important;
+}

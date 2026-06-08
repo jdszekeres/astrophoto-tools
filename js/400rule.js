@@ -10,9 +10,9 @@ document.getElementById('calculate_button').addEventListener('click', function()
     const cropFactor = isAPSC ? 1.5 : 1.0;
     const maxExposure = 400 / (focalLength * cropFactor);
     if (maxExposure < 1) {
-        document.getElementById('result').textContent = `Maximum Exposure Time: 1/${(1/maxExposure).toFixed(0)} seconds`;
+        document.getElementById('result').textContent = `1/${(1/maxExposure).toFixed(0)} seconds`;
     } else {
-        document.getElementById('result').textContent = `Maximum Exposure Time: ${maxExposure.toFixed(0)} seconds`;
+        document.getElementById('result').textContent = `${maxExposure.toFixed(0)} seconds`;
     }
 
     document.querySelector('h2:has(#result)').style.display = 'block';
