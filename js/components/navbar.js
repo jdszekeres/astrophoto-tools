@@ -82,8 +82,10 @@ class Navbar extends HTMLElement {
                 <li><a href="/pages/equivalent_exposures.html" class="${this.page === 'ee' ? 'active' : ''}">Equivalent Exposures</a></li>
                 <li><a href="/pages/bortle.html" class="${this.page === 'bortle' ? 'active' : ''}">Bortle Scale Finder</a></li>
                 <li><a href="/pages/bortle_reference.html" class="${this.page === 'bortle_reference' ? 'active' : ''}">Bortle Scale Reference</a></li>
-                <li><a href="/pages/sun_and_moon_rise.html" class="${this.page === 'sun_and_moon_rise' ? 'active' : ''}">Sun and Moon Rise</a></li>
+                <li><a href="/pages/sun_and_moon_rise.html" class="${this.page === 'sun_and_moon_rise' ? 'active' : ''}">Sun and Moon Position</a></li>
+                <li><a href="/pages/400rule.html" class="${this.page === '400rule' ? 'active' : ''}">400 Rule</a></li>
             </ul>
+            
             <button id="install_button" style="display:none;">Install App for Offline Use</button>
         </nav>
         `

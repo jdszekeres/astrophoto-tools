@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>400 Rule</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/400rule.css">
+    <script src="/js/components/navbar.js"></script>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="/icons/icon-192x192.png" type="image/png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-180x180.png">
+</head>
+<body>
+    <div class="container">
+        <nav-bar page="400rule"></nav-bar>
+
+        <div class="content">
+            <h1>400 Rule Calculator</h1>
+            <hr />
+            <div id="inputs-container">
+                <input type="number" id="focal_length" placeholder="Focal Length (mm)" step="any" required>
+                <div>
+                    <input type="checkbox" id="crop_factor_checkbox" />
+                    <label for="crop_factor_checkbox">Apply Crop Factor (for APS-C cameras)</label>
+                </div>
+                <button id="calculate_button">Calculate</button>
+            </div>
+            <div class="br"></div>
+            <p>
+                The 400 Rule is a guideline used by astrophotographers to estimate the maximum exposure time they can use without noticeable star trails. Simply enter your camera's focal length and whether you are using a crop sensor, and the calculator will provide you with the maximum exposure time in seconds.
+            </p>
+            <h2 style="display: none;">Maximum Exposure Time: <span id="result">-</span></h2>
+        </div>
+    </div>
+</body>
+<script src="/js/400rule.js"></script>
+</html>
