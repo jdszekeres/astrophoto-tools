@@ -93,8 +93,8 @@ class Navbar extends HTMLElement {
             </ul>
 
             <div id="buttons">
-                <button id="red_light_button">Red Light Mode</button>
-                <button id="install_button" style="display:none;">Install App for Offline Use</button>
+                <button id="red_light_button" type="button">Red Light Mode</button>
+                <button id="install_button" type="button" style="display:none;">Install App for Offline Use</button>
             </div>
         </nav>
         `
@@ -104,13 +104,20 @@ class Navbar extends HTMLElement {
         }, 0);
     }
     addEventListeners() {
-        document.getElementById('red_light_button').addEventListener('click', () => {
-            const isRedLightMode = localStorage.getItem('redLightMode') === 'true';
-            localStorage.setItem('redLightMode', !isRedLightMode);
-            this.renderRedLightMode();
-        });
+        const redBtn = this.querySelector('#red_light_button');
+        if (redBtn) {
+            redBtn.onclick = () => {
+                const isRedLightMode = localStorage.getItem('redLightMode') === 'true';
+                console.log('Toggling red light mode. Current state:', isRedLightMode);
+                const newVal = String(!isRedLightMode);
+                localStorage.setItem('redLightMode', newVal);
+                this.renderRedLightMode();
+            };
+        }
 
-        document.getElementById('install_button').addEventListener('click', () => {
+        const installBtn = this.querySelector('#install_button');
+        if (installBtn) {
+            installBtn.addEventListener('click', () => {
             if (this.installPromptEvent) {
                 this.installPromptEvent.prompt();
                 this.installPromptEvent.userChoice.then((choiceResult) => {
@@ -121,6 +128,7 @@ class Navbar extends HTMLElement {
                     }});
             }
         });
+        }
 
     }
 
@@ -138,18 +146,7 @@ class Navbar extends HTMLElement {
 
     renderRedLightMode() {
             const isRedLightMode = localStorage.getItem('redLightMode') === 'true';
-
-            if (isRedLightMode) {
-                const link = document.createElement('link');
-                link.rel = 'stylesheet';
-                link.href = '/css/redlight.css';
-                document.head.appendChild(link);
-            } else {
-                const existingLink = document.querySelector('link[href="/css/redlight.css"]');
-                if (existingLink) {
-                    existingLink.remove();
-                }
-            }
+            document.documentElement.classList.toggle('red-light-mode', isRedLightMode);
         }
 
 

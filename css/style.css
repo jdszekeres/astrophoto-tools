@@ -26,3 +26,20 @@ h1 {
     width: 100%;
     text-align: center;
 }
+
+@media (max-width: 600px) {
+    #install_button {
+        visibility: hidden;
+        position: relative;
+    }
+    #install_button:after {
+        visibility: visible;
+        position: absolute;
+        top: 0;
+        left: 0;
+        content: "Install App";
+        border: 1px solid black;
+        border-radius: 5px;
+        padding: 5px 10px;
+    }
+}

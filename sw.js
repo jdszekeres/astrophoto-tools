@@ -23,6 +23,7 @@ const ASSETS_TO_CACHE = [
     '/css/bortle.css',
     '/css/400rule.css',
     '/css/sun_and_moon_rise.css',
+    '/css/redlight.css',
     '/assets/mondo_ridotto0p25.jpg',
     '/assets/bortle_reference.jpg',
 ];

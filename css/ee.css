@@ -41,3 +41,11 @@ input {
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+
+@media (max-width: 600px) {
+    #ee_first, #ee_second {
+        flex-direction: column;
+        align-items: center;
+        
+    }
+}

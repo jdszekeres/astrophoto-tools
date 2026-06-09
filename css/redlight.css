@@ -1,82 +1,88 @@
-body {
+html.red-light-mode,
+html.red-light-mode body {
     color: black;
     background-color: #800000;
 }
 
-.content {
-    background-color: #800000;
+html.red-light-mode .container,
+html.red-light-mode .content,
+html.red-light-mode nav {
+    background-color: #800000 !important;
 }
 
-.active {
+html.red-light-mode .active {
     background-color: #800000 !important;
     border: black 1px solid !important;
     margin: 5px !important;
     border-radius: 5px !important;
 }
 
-button {
+html.red-light-mode button,
+html.red-light-mode button[type="submit"],
+html.red-light-mode #submit-button,
+html.red-light-mode #current-location-button,
+html.red-light-mode #install_button,
+html.red-light-mode #red_light_button {
     background-color: #800000 !important;
     border: black 1px solid !important;
     color: black !important;
 }
 
-input {
-    background-color: #800000;
-    border: black 1px solid;
-    color: black;
+html.red-light-mode input,
+html.red-light-mode select,
+html.red-light-mode textarea {
+    background-color: #800000 !important;
+    border: black 1px solid !important;
+    color: black !important;
 }
 
-input::placeholder {
-    color: black;
+html.red-light-mode input::placeholder,
+html.red-light-mode textarea::placeholder {
+    color: black !important;
 }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+html.red-light-mode input::-webkit-outer-spin-button,
+html.red-light-mode input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
-/* Firefox */
-input[type=number] {
-  -moz-appearance: textfield;
-  appearance: textfield; /* Standard property for modern systems */
+html.red-light-mode input[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
 }
 
-input[type=checkbox] {
+html.red-light-mode input[type=checkbox] {
     accent-color: #800000;
     outline: black 1px solid;
     width: 1em;
     height: 1em;
 }
 
-input[type="checkbox"]:not(:checked) {
-  appearance: none;
-  -webkit-appearance: none;
-  width: 13px;
-  height: 13px;
-  border: 1px solid black;
-  background-color: #800000; /* Your choice of unchecked color */
-  border-radius: 3px;
+html.red-light-mode input[type="checkbox"]:not(:checked) {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 13px;
+    height: 13px;
+    border: 1px solid black;
+    background-color: #800000;
+    border-radius: 3px;
 }
 
-hr {
+html.red-light-mode hr {
     display: none;
 }
 
-nav {
+html.red-light-mode nav {
     color: black !important;
-    background-color: #800000 !important;
     border-right: 1px solid black;
 }
 
-nav > ul > li > a {
+html.red-light-mode nav > ul > li > a,
+html.red-light-mode a {
     color: black !important;
 }
 
-a {
-    color: black !important;
-}
-
-.page-item {
+html.red-light-mode .page-item {
     border: black 1px solid !important;
 }
