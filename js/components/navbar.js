@@ -81,6 +81,13 @@ class Navbar extends HTMLElement {
                 display: flex;
                 flex-direction: column;
             }
+
+            @media (max-width: 768px) {
+                nav {
+                    justify-content: flex-start;
+                    height: auto;
+                    position: relative;
+                }
         </style>
         <nav>
             <ul>
