@@ -13,8 +13,8 @@ class ExposureCalculator {
             const equivalentShutterSpeed = (targetAperture ** 2) * (targetIso / 100) / (2 ** ev);
             return equivalentShutterSpeed;
         } else if (targetAperture && !targetIso && targetShutterSpeed) {
-            // ISO = 100 * (2^EV * t) / N^2
-            const equivalentIso = 100 * (2 ** ev) * targetShutterSpeed / (targetAperture ** 2);
+            // ISO = 100 * N^2 / (2^EV * t)
+            const equivalentIso = 100 * (targetAperture ** 2) / ((2 ** ev) * targetShutterSpeed);
             return equivalentIso;
         } else if (!targetAperture && targetIso && targetShutterSpeed) {
             // N = sqrt(2^EV * t * (100/ISO))

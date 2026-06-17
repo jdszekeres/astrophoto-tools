@@ -29,16 +29,15 @@ apertureCheckbox.addEventListener('change', () => {
     if (apertureCheckbox.checked) {
         shutterSpeedCheckbox.checked = false;
         isoCheckbox.checked = false;
-        equivalentApertureOutput.textContent = '';
+        equivalentApertureOutput.value = '';
         equivalentApertureOutput.disabled = true;
         equivalentShutterSpeedOutput.disabled = false;
         equivalentIsoOutput.disabled = false;
-        isoCheckbox.checked = false;
-        shutterSpeedCheckbox.checked = false;
 
         equivalentExposureTriangle.aperture = NaN;
-        equivalentExposureTriangle.shutterSpeed = equivalentShutterSpeedOutput.value.includes('/') ? equivalentShutterSpeedOutput.value.split('/').map(Number).reduce((a, b) => a / b) : equivalentShutterSpeedOutput.value;
+        equivalentExposureTriangle.shutterSpeed = equivalentShutterSpeedOutput.value.includes('/') ? equivalentShutterSpeedOutput.value.split('/').map(Number).reduce((a, b) => a / b) : parseFloat(equivalentShutterSpeedOutput.value);
         equivalentExposureTriangle.iso = parseInt(equivalentIsoOutput.value);
+        updateEquivalentExposure();
     } else {
         equivalentApertureOutput.disabled = false;
     }
@@ -49,16 +48,15 @@ shutterSpeedCheckbox.addEventListener('change', () => {
     if (shutterSpeedCheckbox.checked) {
         apertureCheckbox.checked = false;
         isoCheckbox.checked = false;
-        equivalentShutterSpeedOutput.textContent = '';
+        equivalentShutterSpeedOutput.value = '';
         equivalentShutterSpeedOutput.disabled = true;
         equivalentApertureOutput.disabled = false;
         equivalentIsoOutput.disabled = false;
-        apertureCheckbox.checked = false;
-        isoCheckbox.checked = false;
 
         equivalentExposureTriangle.shutterSpeed = NaN;
         equivalentExposureTriangle.iso = parseInt(equivalentIsoOutput.value);
         equivalentExposureTriangle.aperture = parseFloat(equivalentApertureOutput.value);
+        updateEquivalentExposure();
     } else {
         equivalentShutterSpeedOutput.disabled = false;
     }
@@ -68,16 +66,15 @@ isoCheckbox.addEventListener('change', () => {
     if (isoCheckbox.checked) {
         apertureCheckbox.checked = false;
         shutterSpeedCheckbox.checked = false;
-        equivalentIsoOutput.textContent = '';
+        equivalentIsoOutput.value = '';
         equivalentIsoOutput.disabled = true;
         equivalentApertureOutput.disabled = false;
         equivalentShutterSpeedOutput.disabled = false;
-        apertureCheckbox.checked = false;
-        shutterSpeedCheckbox.checked = false;
 
         equivalentExposureTriangle.iso = NaN;
-        equivalentExposureTriangle.shutterSpeed = equivalentShutterSpeedOutput.value.includes('/') ? equivalentShutterSpeedOutput.value.split('/').map(Number).reduce((a, b) => a / b) : equivalentShutterSpeedOutput.value;
+        equivalentExposureTriangle.shutterSpeed = equivalentShutterSpeedOutput.value.includes('/') ? equivalentShutterSpeedOutput.value.split('/').map(Number).reduce((a, b) => a / b) : parseFloat(equivalentShutterSpeedOutput.value);
         equivalentExposureTriangle.aperture = parseFloat(equivalentApertureOutput.value);
+        updateEquivalentExposure();
     }
     else {
         equivalentIsoOutput.disabled = false;
@@ -144,7 +141,27 @@ function updateEquivalentExposure() {
         const equivalentIso = equivalentExposureCalculator.calculateEquivalentExposure(ev, equivalentExposureTriangle.aperture, null, equivalentExposureTriangle.shutterSpeed);
         equivalentIsoOutput.value = Math.round(equivalentIso);
     }
-
-
-
 }
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', () => {
+    // Check which checkbox is checked and set up the initial state
+    if (shutterSpeedCheckbox.checked) {
+        equivalentExposureTriangle.shutterSpeed = NaN;
+        equivalentExposureTriangle.iso = parseInt(equivalentIsoOutput.value);
+        equivalentExposureTriangle.aperture = parseFloat(equivalentApertureOutput.value);
+        equivalentShutterSpeedOutput.disabled = true;
+    } else if (apertureCheckbox.checked) {
+        equivalentExposureTriangle.aperture = NaN;
+        equivalentExposureTriangle.shutterSpeed = equivalentShutterSpeedOutput.value.includes('/') ? equivalentShutterSpeedOutput.value.split('/').map(Number).reduce((a, b) => a / b) : parseFloat(equivalentShutterSpeedOutput.value);
+        equivalentExposureTriangle.iso = parseInt(equivalentIsoOutput.value);
+        equivalentApertureOutput.disabled = true;
+    } else if (isoCheckbox.checked) {
+        equivalentExposureTriangle.iso = NaN;
+        equivalentExposureTriangle.shutterSpeed = equivalentShutterSpeedOutput.value.includes('/') ? equivalentShutterSpeedOutput.value.split('/').map(Number).reduce((a, b) => a / b) : parseFloat(equivalentShutterSpeedOutput.value);
+        equivalentExposureTriangle.aperture = parseFloat(equivalentApertureOutput.value);
+        equivalentIsoOutput.disabled = true;
+    }
+    
+    updateEquivalentExposure();
+});
