@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star Chart</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/starchart.css">
+    <script src="/js/components/navbar.js"></script>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="/icons/icon-192x192.png" type="image/png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-180x180.png">
+    <link rel="stylesheet" id="redlight_stylesheet" href="/css/redlight.css">
+</head>
+<body>
+    <div class="container">
+        <nav-bar page="starchart"></nav-bar>
+
+        <div class="content">
+            <h1>Star Chart</h1>
+            <hr />
+
+            <form>
+                <input type="number" id="lat" placeholder="Latitude" step="any" required>
+                <input type="number" id="lon" placeholder="Longitude" step="any" required>
+                <button id="current-location-button">Use Current Location</button>
+
+                
+                <br>
+                <input type="datetime-local" id="datetime" required>
+                <br>
+                <button type="submit" id="submitbutton">Generate Star Chart</button>
+            </form>
+
+            <div class="starchart-container">
+                <canvas id="starChart" width="600" height="600" style="width: 600px; height: 600px;"></canvas>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="/js/libraries/astronomy.browser.min.js"></script>
+<script src="/js/constellations.js"></script>
+<script src="/js/starchart.js"></script>
+</html>

@@ -97,6 +97,7 @@ class Navbar extends HTMLElement {
                 <li><a href="/pages/bortle_reference.html" class="${this.page === 'bortle_reference' ? 'active' : ''}">Bortle Scale Reference</a></li>
                 <li><a href="/pages/sun_and_moon_rise.html" class="${this.page === 'sun_and_moon_rise' ? 'active' : ''}">Sun and Moon Position</a></li>
                 <li><a href="/pages/400rule.html" class="${this.page === '400rule' ? 'active' : ''}">400 Rule</a></li>
+                <li><a href="/pages/starchart.html" class="${this.page === 'starchart' ? 'active' : ''}">Star Chart</a></li>
             </ul>
 
             <div id="buttons">

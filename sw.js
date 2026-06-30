@@ -6,6 +6,7 @@ const ASSETS_TO_CACHE = [
     '/pages/bortle_reference.html',
     '/pages/sun_and_moon_rise.html',
     '/pages/400rule.html',
+    '/pages/starchart.html',
     '/js/main.js',
     '/js/sun_and_moon_rise.js',
     '/js/bortle.js',
@@ -14,7 +15,10 @@ const ASSETS_TO_CACHE = [
     '/js/equivalent_exposures.js',
     '/js/night_sky.js',
     '/js/400rule.js',
+    '/js/starchart.js',
+    '/js/constellations.js',
     '/js/libraries/suncalc.js',
+    '/js/libraries/astronomy.browser.min.js',
     '/js/components/navbar.js',
     '/js/components/page_item.js',
     '/css/style.css',
@@ -23,9 +27,12 @@ const ASSETS_TO_CACHE = [
     '/css/bortle.css',
     '/css/400rule.css',
     '/css/sun_and_moon_rise.css',
+    '/css/starchart.css',
     '/css/redlight.css',
     '/assets/mondo_ridotto0p25.jpg',
     '/assets/bortle_reference.jpg',
+    '/assets/catalog',
+    '/assets/IAU-CSN.json',
 ];
 
 const CACHE_NAME = 'astrophoto-tools-cache-v1';
@@ -49,3 +56,4 @@ self.addEventListener('fetch', (event) => {
         })
     );
 });
+
