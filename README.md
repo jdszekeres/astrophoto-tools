@@ -36,3 +36,8 @@ Find the maximum shutter speed to prevent star trails
 
 ### Credits
 - [mourner](https://github.com/mourner) for [SunCalc](https://github.com/mourner/suncalc)
+- [mirandadam](https://github.com/mirandadam) for [IAU Starnames](https://github.com/mirandadam/iau-starnames/blob/master/catalog_data/IAU-CSN.json)
+- [cosinekitty](https://github.com/cosinekitty) for [Astronomy Engine](https://github.com/cosinekitty/astronomy)
+- [ESO](www.eso.org) for [Bortle Scale map](https://www.eso.org/public/about-eso/dark-skies-preservation/)
+- [Yale Bright Stars Catalog](http://tdc-www.harvard.edu/catalogs/bsc5.html)
+- [Lightpollution.it the Night sky in the world](https://www.lightpollution.it/dmsp/index.html)

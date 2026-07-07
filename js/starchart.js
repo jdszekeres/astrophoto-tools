@@ -1,6 +1,19 @@
 let stars = [];
 let starNames = {};
 
+const planets = [
+    Astronomy.Body.Sun,
+    Astronomy.Body.Moon,
+    Astronomy.Body.Mercury,
+    Astronomy.Body.Venus,
+    Astronomy.Body.Mars,
+    Astronomy.Body.Jupiter,
+    Astronomy.Body.Saturn,
+    Astronomy.Body.Uranus,
+    Astronomy.Body.Neptune,
+    Astronomy.Body.Pluto
+]
+
 const whiteListedStars = new Set([
     424, // Polaris
     2491, //Sirius
@@ -15,17 +28,18 @@ async function fetch_star_data() {
 }
 
 async function fetch_star_names() {
-    const response = await fetch('/assets/IAU-CSN.json');
+    const response = await fetch('/assets/IAU-CSN.json');  //IAU Catalog of Star Names
     const data = await response.json();
     
     data.forEach(entry => {
         starNames[entry["HD"]] = entry["Name/Diacritics"];
     });
-    console.log('Star names loaded:', starNames);
 }
 
 
 async function parse_star_data(data) {
+    await constellationLinesReady;
+
     const lines = data.split('\n');
     const stars = [];
     for (const line of lines) {
@@ -85,6 +99,187 @@ const polarToCartesian = (r, theta) => {
     return { x, y };
 }
 
+const b1875Time = Astronomy.MakeTime(new Date('1875-01-01T12:00:00Z'));
+const b1875ToJ2000 = Astronomy.InverseRotation(Astronomy.Rotation_EQJ_EQD(b1875Time));
+
+function precess1875To2000(raHours, decDegrees) {
+    const raRadians = raHours * 15 * Math.PI / 180;
+    const decRadians = decDegrees * Math.PI / 180;
+    const vector1875 = new Astronomy.Vector(
+        Math.cos(decRadians) * Math.cos(raRadians),
+        Math.cos(decRadians) * Math.sin(raRadians),
+        Math.sin(decRadians),
+        b1875Time
+    );
+    const vector2000 = Astronomy.RotateVector(b1875ToJ2000, vector1875);
+    return Astronomy.EquatorFromVector(vector2000);
+}
+
+function drawStar(ctx, centerX, centerY, star, maxRadius) {
+    const { x, y } = polarToCartesian(star.r * (maxRadius / 90), star.theta);
+        const brightness = Math.max(0, 1 - (star.mag / 6)); // Normalize magnitude to [0, 1]
+        const radius = Math.max(1, 5 * brightness); // Scale radius based on brightness
+        ctx.beginPath();
+        ctx.arc(centerX + x, centerY - y, radius, 0, 2 * Math.PI);
+        ctx.fillStyle = `rgba(255, 255, 255, ${brightness})`; // White color with brightness
+        ctx.fill();
+
+       // Optionally, draw star names for brighter stars
+        if (star.mag < 2 || whiteListedStars.has(parseInt(star.id))) { // Only label stars brighter than magnitude 2 and whitelisted stars
+        ctx.font = '12px Arial';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+            const IAU_name = starNames[star.HD];
+            const displayName = IAU_name ? IAU_name : star.name;
+            ctx.fillText(displayName, centerX + x + 5, centerY - y - 5); // Offset the text slightly
+        }
+}
+
+function drawStars(ctx, centerX, centerY, starObject, maxRadius) {
+    Object.values(starObject).forEach(star => {
+        drawStar(ctx, centerX, centerY, star, maxRadius);
+    });
+}
+
+function drawConstellationLines(ctx, centerX, centerY, starObject, constellation_lines, maxRadius) {
+    constellation_lines.forEach(line => {
+        const star1 = starObject[line[0]];
+        const star2 = starObject[line[1]];
+
+        if (star1 && star2) {
+            const { x: x1, y: y1 } = polarToCartesian(star1.r * (maxRadius / 90), star1.theta);
+            const { x: x2, y: y2 } = polarToCartesian(star2.r * (maxRadius / 90), star2.theta);
+            
+            ctx.beginPath();
+            ctx.moveTo(centerX + x1, centerY - y1);
+            ctx.lineTo(centerX + x2, centerY - y2);
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+            ctx.stroke();
+        }
+    });
+}
+
+function drawConstellationLabels(ctx, centerX, centerY, starObject, constellation_lines, maxRadius) {
+    Object.entries(stars.map((star) => {
+        const {r, theta} = starObject[star.id] || {};
+        if (r !== undefined && theta !== undefined && r > 90) {
+            return null;
+        }
+
+        const ra = star.ra_hrs + (star.ra_min / 60) + (star.ra_sec / 3600);
+        const dec = (star.dec_sign === '-' ? -1 : 1) * (star.dec_deg + (star.dec_min / 60) + (star.dec_sec / 3600));
+
+        const constellationInfo = Astronomy.Constellation(ra, dec);
+
+        if (constellationInfo) {
+            const constellationName = constellationInfo.name;
+
+            const { x, y } = polarToCartesian(r * (maxRadius / 90), theta);
+            return { constellationName, x:  x, y: y };
+        }
+    }).reduce((acc, val) => {
+        if (val && !isNaN(val.x) && !isNaN(val.y)) {
+            const count = acc[val.constellationName]?.count || 0;
+
+            const avgX = ((acc[val.constellationName]?.x || 0) * (count) + val.x) / (count + 1);
+            const avgY = ((acc[val.constellationName]?.y || 0) * (count) + val.y) / (count + 1);
+
+            acc[val.constellationName] = { x: avgX, y: avgY, count: (acc[val.constellationName]?.count || 0) + 1 };
+        }
+        return acc;
+    }, {})).forEach(([constellationName, { x, y }]) => {
+
+        console.log(`Labeling constellation ${constellationName} at (${x}, ${y})`);
+        ctx.font = '12px Arial';
+        ctx.fillStyle = 'blue';
+        ctx.fillText(constellationName, centerX + x + 5, centerY - y - 5); // Offset the text slightly
+    });
+}
+
+function drawPlanet(ctx, centerX, centerY, observer, date, planet, maxRadius) {
+    const planetEquatorial = Astronomy.Equator(planet, date, observer, true, true);
+        const planetHorizontal = Astronomy.Horizon(date, observer, planetEquatorial.ra, planetEquatorial.dec);
+        const r = 90 - planetHorizontal.altitude;
+        const theta = planetHorizontal.azimuth;
+
+        if (r <= 90) { // Only draw if above the horizon
+            const { x, y } = polarToCartesian(r * (maxRadius / 90), theta);
+            ctx.beginPath();
+            ctx.arc(centerX + x, centerY - y, 6, 0, 2 * Math.PI);
+            ctx.fillStyle = 'yellow';
+            ctx.fill();
+            ctx.font = '12px Arial';
+            ctx.fillStyle = 'rgba(255, 255, 0, 0.8)';
+            ctx.strokeStyle = 'black';
+            ctx.lineWidth = 1;
+            ctx.strokeText(planet, centerX + x + 8, centerY - y - 8); // Offset the text slightly
+            ctx.fillText(planet, centerX + x + 8, centerY - y - 8); // Place yellow text on top of the black stroke for better visibility
+        }
+}
+
+// function drawConstellationBounds(ctx, centerX, centerY, starObject, maxRadius, observer, date) {
+//     const constellations = stars.map((star) => {
+//         const {r, theta} = starObject[star.id] || {};
+//         if (r !== undefined && theta !== undefined && r > 90) {
+//             return null;
+//         }
+
+//         const ra = star.ra_hrs + (star.ra_min / 60) + (star.ra_sec / 3600);
+//         const dec = (star.dec_sign === '-' ? -1 : 1) * (star.dec_deg + (star.dec_min / 60) + (star.dec_sec / 3600));
+
+//         return Astronomy.Constellation(ra, dec);
+//     }).filter(Boolean);
+
+//     //Find index of constellation in the constellations array
+//     const uniqueConstellationsIds = [...new Set(constellations.map(c => c.name))].
+//         map(name => Astronomy.ConstelNames.findIndex(c => c[1] === name));
+
+//     Astronomy.ConstelBounds.forEach((b, index) => {
+//         if (true) {
+//             const fd = 10 / (4 * 60); // conversion factor from compact units to DEC degrees
+//             const fr = fd / 15; // conversion factor from compact units to RA  sidereal hours 
+
+//             const dec_lo = b[3] * fd;
+//             const dec_hi_units = index === 0 ? 90 / fd : Astronomy.ConstelBounds[index - 1][3];
+//             const dec_hi = dec_hi_units * fd;
+//             const ra_lo = b[1] * fr;
+//             const ra_hi = b[2] * fr;
+
+//             console.log(`Drawing bounds for constellation ${Astronomy.ConstelNames[b[0]][1]}: RA ${ra_lo} to ${ra_hi}, Dec ${dec_lo} to ${dec_hi}`);
+
+//             const corners = [
+//                 precess1875To2000(ra_lo, dec_lo),
+//                 precess1875To2000(ra_hi, dec_lo),
+//                 precess1875To2000(ra_hi, dec_hi),
+//                 precess1875To2000(ra_lo, dec_hi),
+//             ];
+
+//             const points = corners.map(corner => {
+//                 const hor = Astronomy.Horizon(date, observer, corner.ra, corner.dec);
+//                 return {
+//                     altitude: hor.altitude,
+//                     x: polarToCartesian((90 - hor.altitude) * (maxRadius / 90), hor.azimuth).x,
+//                     y: polarToCartesian((90 - hor.altitude) * (maxRadius / 90), hor.azimuth).y,
+//                 };
+//             });
+
+//             if (points.some(point => point.altitude > 0)) {
+//                 ctx.beginPath();
+//                 ctx.moveTo(centerX + points[0].x, centerY - points[0].y);
+//                 points.slice(1).forEach(point => {
+//                     ctx.lineTo(centerX + point.x, centerY - point.y);
+//                 });
+//                 ctx.closePath();
+//                 ctx.fillStyle = 'rgba(0, 255, 0, 0.08)';
+//                 ctx.fill();
+//                 ctx.strokeStyle = 'rgba(0, 255, 0, 0.5)';
+//                 ctx.stroke();
+//             }
+//         }
+//     });
+// }
+        
+        
+
 function createStarChart(observer, stars, date) {
     const starPositions = getStarPositionsAtTime(observer, stars, date);
     const canvas = document.getElementById('starChart');
@@ -93,6 +288,10 @@ function createStarChart(observer, stars, date) {
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
     const maxRadius = 300; // Maximum radius for the star chart
+
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
 
     // Draw the circular boundary
     ctx.beginPath();
@@ -122,48 +321,31 @@ function createStarChart(observer, stars, date) {
         if (isNaN(star.r) || isNaN(star.theta)) return; // Skip stars with invalid coordinates
         if (star.r > 90) return; // Skip stars below the horizon
 
-        // console.log(`Star ${star.name} (ID: ${star.id}) - r: ${star.r}, theta: ${star.theta}, mag: ${star.mag} name from IAU catalog: ${starNames[star.HD]}`);
 
         starObject[star.id] = {r: star.r, theta: star.theta, mag: star.mag, id: star.id, name: star.name, HD: star.HD};
     });
-    Object.values(starObject).forEach(star => {
-        const { x, y } = polarToCartesian(star.r * (maxRadius / 90), star.theta);
-        const brightness = Math.max(0, 1 - (star.mag / 6)); // Normalize magnitude to [0, 1]
-        const radius = Math.max(1, 5 * brightness); // Scale radius based on brightness
-        ctx.beginPath();
-        ctx.arc(centerX + x, centerY - y, radius, 0, 2 * Math.PI);
-        ctx.fillStyle = `rgba(255, 255, 255, ${brightness})`; // White color with brightness
-        ctx.fill();
 
-       // Optionally, draw star names for brighter stars
-        if (star.mag < 2 || whiteListedStars.has(parseInt(star.id))) { // Only label stars brighter than magnitude 2 and whitelisted stars
-        ctx.font = '12px Arial';
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
-            const IAU_name = starNames[star.HD];
-            console.log(`Star ${star.name} (ID: ${star.id}, HD: ${star.HD}) - IAU name: ${IAU_name}`);
-            const displayName = IAU_name ? IAU_name : star.name;
-            ctx.fillText(displayName, centerX + x + 5, centerY - y - 5); // Offset the text slightly
-        }
-    });
+    //Draw overall constellation labels
+    drawConstellationLabels(ctx, centerX, centerY, starObject, constellation_lines, maxRadius);
 
-    constellation_lines.forEach(line => {
-        const star1 = starObject[line[0]];
-        const star2 = starObject[line[1]];
+    //Draw constellation bounds
+    // drawConstellationBounds(ctx, centerX, centerY, starObject, maxRadius, observer, date);
 
-        if (star1 && star2) {
-            const { x: x1, y: y1 } = polarToCartesian(star1.r * (maxRadius / 90), star1.theta);
-            const { x: x2, y: y2 } = polarToCartesian(star2.r * (maxRadius / 90), star2.theta);
-            
-            ctx.beginPath();
-            ctx.moveTo(centerX + x1, centerY - y1);
-            ctx.lineTo(centerX + x2, centerY - y2);
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
-            ctx.stroke();
-        }
-    })
+    //Draw stars
+    drawStars(ctx, centerX, centerY, starObject, maxRadius);
+
+    //Draw constellation lines
+
+    drawConstellationLines(ctx, centerX, centerY, starObject, constellation_lines, maxRadius);
+
+
+    //Draw and label planets
+    for (const planet of planets) {
+        drawPlanet(ctx, centerX, centerY, observer, date, planet, maxRadius);
+    }
 }
 
-document.getElementById('submitbutton').addEventListener('click', (e) => {
+document.getElementById('submitbutton').addEventListener('click', async (e) => {
     e.preventDefault();
     const lat = parseFloat(document.getElementById('lat').value);
     const lon = parseFloat(document.getElementById('lon').value);
@@ -180,14 +362,15 @@ document.getElementById('submitbutton').addEventListener('click', (e) => {
 
     const observer = new Astronomy.Observer(lat, lon, 0); // Assuming sea level for altitude
 
+    await constellationLinesReady;
+
     if (stars.length === 0) {
-        stars = fetch_star_data().then(data => parse_star_data(data)).then(parsed_stars => {
-            stars = Array.from(parsed_stars).sort((a, b) => a.mag - b.mag);
-            createStarChart(observer, stars, date);
-        });
-    } else {
-        createStarChart(observer, stars, date);
+        const data = await fetch_star_data();
+        const parsed_stars = await parse_star_data(data);
+        stars = Array.from(parsed_stars).sort((a, b) => a.mag - b.mag);
     }
+
+    createStarChart(observer, stars, date);
 });
 
 

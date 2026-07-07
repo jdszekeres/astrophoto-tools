@@ -32,7 +32,11 @@ const ASSETS_TO_CACHE = [
     '/assets/mondo_ridotto0p25.jpg',
     '/assets/bortle_reference.jpg',
     '/assets/catalog',
+    '/assets/constellation-lines-hr.utf8.txt',
     '/assets/IAU-CSN.json',
+    '/icons/icon-192x192.png',
+    '/icons/icon-512x512.png',
+    '/icons/icon-180x180.png'
 ];
 
 const CACHE_NAME = 'astrophoto-tools-cache-v1';
