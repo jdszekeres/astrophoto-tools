@@ -1,7 +1,10 @@
-.content {
-    flex-direction: row;
+#page-items {
     display: flex;
-    justify-content: start;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
     flex-wrap: wrap;
-    gap: 40px;
+    column-gap: 40px;
+    width: 100%;
+    height: calc(100% - 60px);
 }

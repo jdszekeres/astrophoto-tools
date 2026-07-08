@@ -43,3 +43,5 @@ Find the maximum shutter speed to prevent star trails
 - [ESO](www.eso.org) for [Bortle Scale map](https://www.eso.org/public/about-eso/dark-skies-preservation/)
 - [Yale Bright Stars Catalog](http://tdc-www.harvard.edu/catalogs/bsc5.html)
 - [Lightpollution.it the Night sky in the world](https://www.lightpollution.it/dmsp/index.html)
+
+
