@@ -92,6 +92,7 @@ class Navbar extends HTMLElement {
         <nav>
             <ul>
                 <li><a href="/index.html" class="${this.page === 'home' ? 'active' : ''}">Home</a></li>
+                <li><a href="/pages/recommended_settings.html" class="${this.page === 'recommended_settings' ? 'active' : ''}">Recommended Settings</a></li>
                 <li><a href="/pages/equivalent_exposures.html" class="${this.page === 'ee' ? 'active' : ''}">Equivalent Exposures</a></li>
                 <li><a href="/pages/bortle.html" class="${this.page === 'bortle' ? 'active' : ''}">Bortle Scale Finder</a></li>
                 <li><a href="/pages/bortle_reference.html" class="${this.page === 'bortle_reference' ? 'active' : ''}">Bortle Scale Reference</a></li>
