@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stacking Calculator</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/stacking.css">
+    <script src="/js/components/navbar.js"></script>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="/icons/icon-192x192.png" type="image/png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-180x180.png">
+    <link rel="stylesheet" id="redlight_stylesheet" href="/css/redlight.css">
+</head>
+<body>
+    <div class="container">
+        <nav-bar page="stacking"></nav-bar>
+
+
+        <div class="content">
+            <h1>Stacking Calculator</h1>
+            <hr />
+            <p>Select your subject:</p>
+            <div id="type-selector">
+
+            </div>
+
+            <div id="inputs-container">
+                <input type="number" id="exposures" placeholder="Number of Exposures" step="any" required>
+                <input type="number" id="exposure_time" placeholder="Exposure Time (seconds)" step="any" required>
+            </div>
+
+            <div id="button-container">
+                <button id="calculate-button" type="submit">Calculate</button>
+            </div>
+
+            <div id="results-container">
+                
+            </div>
+        </div>
+    </div>
+</body>
+<script src="/js/stacking.js"></script>
+</html>

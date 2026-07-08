@@ -1,0 +1,140 @@
+#type-selector {
+    display: flex;
+    flex-wrap: wrap;
+
+    flex-direction: row;
+    justify-content: space-between;
+
+    row-gap: 10px;
+
+}
+
+.selection-option {
+    border: 2px solid #ccc;
+    width: calc(33% - 10px);
+    aspect-ratio: 4/1;
+
+    border-radius: 5px;
+
+}
+
+.option-name {
+    padding: 5px;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.option-description {
+    padding: 5px;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.selected {
+    border: 2px solid green;
+}
+
+#inputs-container {
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    margin: 20px auto;
+    flex-wrap: wrap;
+
+}
+
+input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 40%;
+}
+
+button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 20px;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+#button-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#results-details {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.gradient-container {
+    width: 100%;
+    height: 30px;
+    background: linear-gradient(to right, lab(55.4814 75.0732 48.8528) 0%, lab(76.3898 14.5258 98.4589) 50%, lab(52.0183 66.11 -78.2316) 100%);
+
+    border-radius: 15px;
+    overflow: hidden;
+
+    display: flex;
+    justify-content: flex-end;
+
+
+}
+
+.gradient-bar {
+    height: 100%;
+    background: #ccc;
+
+}
+
+.gradient-labels {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    font-size: 0.9em;
+}
+
+.selected_label {
+    font-weight: bold;
+}
+
+.option-levels {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+
+.disp-level {
+    width: 30%;
+    height: 20px;
+    border-radius: 3px;
+    text-align: center;
+}
+
+.min {
+    border: 1px solid red;
+}
+
+.rec {
+    border: 1px solid yellow;
+}
+
+.max {
+    border: 1px solid green;
+}
+
