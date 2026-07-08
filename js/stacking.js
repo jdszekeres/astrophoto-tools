@@ -136,7 +136,7 @@ function makeResults(typeInfo, exposureTime, ExposureCount) {
     const snr_improvement = Math.sqrt(ExposureCount);
     const signal_gain = 10 * Math.log10(ExposureCount);
 
-    const qualityLevel = integrationTime < typeInfo.rec ? "Poor" : integrationTime > typeInfo.rec ? "Great" : "Good";
+    const qualityLevel = integrationTime < typeInfo.rec ? "Poor" : integrationTime > typeInfo.max ? "Great" : "Good";
 
     const qualityRating = Math.min(1, integrationTime / typeInfo.max);
 
