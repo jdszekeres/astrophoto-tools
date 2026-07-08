@@ -21,8 +21,8 @@ const whiteListedStars = new Set([
 ]); //Stars that are part of constellations that are not connected by lines in the constellation_lines array.
 
 async function fetch_star_data() {
-    const response = await fetch('/assets/catalog'); //Yale Bright Star Catalog
-    const data = await response.text();
+    const response = await fetch('/assets/star_catalog.json'); //Yale Bright Star Catalog
+    const data = await response.json();
 
     return data;
 }
@@ -40,32 +40,14 @@ async function fetch_star_names() {
 async function parse_star_data(data) {
     await constellationLinesReady;
 
-    const lines = data.split('\n');
-    const stars = [];
-    for (const line of lines) {
-        if (line.length < 1) continue; // Skip empty lines
-        const star = {
-            id: line.substring(0, 4).trim(),
-            HD: parseInt(line.substring(25, 31).trim()),
-            name: line.substring(4, 14).trim(),
-            ra_hrs: parseFloat(line.substring(75, 77).trim()), //J2000 for RA and Dec
-            ra_min: parseFloat(line.substring(77, 79).trim()),
-            ra_sec: parseFloat(line.substring(79, 83).trim()),
-            dec_sign: line.substring(83, 84).trim(),
-            dec_deg: parseFloat(line.substring(84, 86).trim()),
-            dec_min: parseFloat(line.substring(86, 88).trim()),
-            dec_sec: parseFloat(line.substring(88, 90).trim()),
-            mag: parseFloat(line.substring(102, 107).trim()),
-        }
-        stars.push(star);
-    }
-    return filterConstellationStars(stars, constellation_lines);
+    
+    return filterConstellationStars(data, constellation_lines);
 }
 
 function getStarPositionsAtTime(observer, stars, date) {
     const starPositions = stars.map(star => {
-        const ra = star.ra_hrs + (star.ra_min / 60) + (star.ra_sec / 3600);
-        const dec = (star.dec_sign === '-' ? -1 : 1) * (star.dec_deg + (star.dec_min / 60) + (star.dec_sec / 3600));
+        const ra = star.ra;
+        const dec = star.dec;
 
         if (isNaN(ra) || isNaN(dec)) {
             console.warn(`Invalid RA/Dec for star ${star.name} (ID: ${star.id})`);
@@ -165,8 +147,8 @@ function drawConstellationLabels(ctx, centerX, centerY, starObject, constellatio
             return null;
         }
 
-        const ra = star.ra_hrs + (star.ra_min / 60) + (star.ra_sec / 3600);
-        const dec = (star.dec_sign === '-' ? -1 : 1) * (star.dec_deg + (star.dec_min / 60) + (star.dec_sec / 3600));
+        const ra = star.ra;
+        const dec = star.dec;
 
         const constellationInfo = Astronomy.Constellation(ra, dec);
 

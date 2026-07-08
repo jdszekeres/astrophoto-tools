@@ -7,7 +7,7 @@ class NightSky {
 
 
         this.image = new Image();
-        this.image.src = '/assets/mondo_ridotto0p25.jpg';
+        this.image.src = '/assets/mondo_ridotto0p25.webp';
         this.image.onload = () => {
             this.canvas.width = this.image.naturalWidth;
             this.canvas.height = this.image.naturalHeight;
