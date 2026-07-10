@@ -93,6 +93,15 @@ function makeSelectionTable() {
         descElem.textContent = item.description;
         option.appendChild(descElem);
 
+        const levelDescElem = document.createElement('div');
+        levelDescElem.className = 'option-level-description';
+        levelDescElem.innerHTML = `
+            <span class="disp-level min">Minimum</span>
+            <span class="disp-level rec">Recommended</span>
+            <span class="disp-level max">Optimal</span>
+        `;
+        option.appendChild(levelDescElem);
+
         const levelsElem = document.createElement('div');
         levelsElem.className = 'option-levels';
         for (const level of ['min', 'rec', 'max']) {

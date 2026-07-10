@@ -27,6 +27,13 @@ h1 {
     text-align: center;
 }
 
+.br {
+    flex-basis: 100%;
+    width: 100%;
+    height: 0;
+    display: block;
+}
+
 @media (max-width: 600px) {
     #install_button {
         visibility: hidden;

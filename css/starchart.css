@@ -3,7 +3,7 @@ form {
     justify-content: center;
     display: flex;
     flex-direction: row;
-    gap: 20px;
+    gap: 5px;
     margin: 20px auto;
     flex-wrap: wrap;
 }
@@ -13,6 +13,15 @@ input {
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 4px;
+}
+
+#current-location-button {
+    width: 50%;
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: transparent;
 }
 
 button[type="submit"] {
@@ -25,15 +34,8 @@ button[type="submit"] {
     font-size: 16px;
 }
 
-#current-location-button {
-    width: 50%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: transparent;
-}
-
-#datetime {
-    flex-basis: 100%;
+.starchart-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }

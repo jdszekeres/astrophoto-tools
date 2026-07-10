@@ -23,12 +23,16 @@
             <form>
                 <input type="number" id="lat" placeholder="Latitude" step="any" required>
                 <input type="number" id="lon" placeholder="Longitude" step="any" required>
-                <button id="current-location-button">Use Current Location</button>
+                <input type="datetime-local" id="datetime" required>
 
                 
-                <br>
-                <input type="datetime-local" id="datetime" required>
-                <br>
+
+                
+                <div class="br"></div>
+                <button id="current-location-button">Use Current Location</button>
+
+                <div class="br"></div>
+                
                 <button type="submit" id="submitbutton">Generate Star Chart</button>
             </form>
 
