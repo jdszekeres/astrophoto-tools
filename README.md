@@ -33,6 +33,18 @@ Find out the sunrise, sunset, moon rise, moon set, moon phase, etc on a day
 
 Find the maximum shutter speed to prevent star trails
 
+- Star Chart
+
+See what stars and planets are visible at a certain time
+
+- Stacking Calculator
+
+Determine how much noise will persist in a stack of certain deep space objects
+
+- FOV Preview
+
+See how your camera and focal length with capture photos of certain space objects
+
 
 ### Credits
 - [mourner](https://github.com/mourner) for [SunCalc](https://github.com/mourner/suncalc)
@@ -40,6 +52,7 @@ Find the maximum shutter speed to prevent star trails
 - [cosinekitty](https://github.com/cosinekitty) for [Astronomy Engine](https://github.com/cosinekitty/astronomy)
 - [johanley](https://github.com/johanley) for [constellation lines](https://github.com/johanley/constellation-line)
 - [markedjs](https://github.com/markedjs) for [marked](https://github.com/markedjs/marked)
+- [openMVG](https://github.com/openMVG) for [CameraSensorSizeDatabase](https://github.com/openMVG/CameraSensorSizeDatabase)
 - [ESO](www.eso.org) for [Bortle Scale map](https://www.eso.org/public/about-eso/dark-skies-preservation/)
 - [Yale Bright Stars Catalog](http://tdc-www.harvard.edu/catalogs/bsc5.html)
 - [Lightpollution.it the Night sky in the world](https://www.lightpollution.it/dmsp/index.html)

@@ -13,7 +13,7 @@ html.red-light-mode nav {
 html.red-light-mode .active {
     background-color: #800000 !important;
     border: black 1px solid !important;
-    margin: 5px !important;
+    /* margin: 5px !important; */
     border-radius: 5px !important;
 }
 
@@ -85,4 +85,8 @@ html.red-light-mode a {
 
 html.red-light-mode .page-item {
     border: black 1px solid !important;
+}
+
+html.red-light-mode nav ul {
+    scrollbar-color: black #800000 !important;
 }

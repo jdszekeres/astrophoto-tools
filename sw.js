@@ -1,3 +1,4 @@
+const messiers = Array.from({ length: 110 }, (_, i) => i + 1).map(num => `assets/messier/m${num}_2deg.webp`);
 const ASSETS_TO_CACHE = [
     '/',
     '/index.html',
@@ -9,6 +10,7 @@ const ASSETS_TO_CACHE = [
     '/pages/starchart.html',
     '/pages/recommended_settings.html',
     '/pages/stacking.html',
+    '/pages/FOVpreview.html',
     '/js/main.js',
     '/js/sun_and_moon_rise.js',
     '/js/bortle.js',
@@ -21,6 +23,7 @@ const ASSETS_TO_CACHE = [
     '/js/constellations.js',
     '/js/recommended_settings.js',
     '/js/stacking.js',
+    '/js/FOVpreview.js',
     '/js/libraries/suncalc.js',
     '/js/libraries/astronomy.browser.min.js',
     '/js/components/navbar.js',
@@ -34,6 +37,7 @@ const ASSETS_TO_CACHE = [
     '/css/starchart.css',
     '/css/redlight.css',
     '/css/stacking.css',
+    '/css/FOVpreview.css',
     '/assets/mondo_ridotto0p25.webp',
     '/assets/bortle_reference.jpg',
     '/assets/star_catalog.json',
@@ -41,7 +45,8 @@ const ASSETS_TO_CACHE = [
     '/assets/IAU-CSN.json',
     '/icons/icon-192x192.png',
     '/icons/icon-512x512.png',
-    '/icons/icon-180x180.png'
+    '/icons/icon-180x180.png',
+    ...messiers
 ];
 
 const CACHE_NAME = 'astrophoto-tools-cache-v1';

@@ -48,6 +48,10 @@ class Navbar extends HTMLElement {
                 padding: 0;
                 display: flex;
                 flex-direction: column;
+
+                overflow-y: scroll;
+                scrollbar-width: thin;
+                scrollbar-color: #4CAF50 #333;
                 
             }
 
@@ -100,6 +104,11 @@ class Navbar extends HTMLElement {
                 <li><a href="/pages/400rule.html" class="${this.page === '400rule' ? 'active' : ''}">400 Rule</a></li>
                 <li><a href="/pages/starchart.html" class="${this.page === 'starchart' ? 'active' : ''}">Star Chart</a></li>
                 <li><a href="/pages/stacking.html" class="${this.page === 'stacking' ? 'active' : ''}">Stacking Calculator</a></li>
+                <li><a href="/pages/stacking.html" class="${this.page === 'stacking' ? 'active' : ''}">Stacking Calculator</a></li>
+                <li><a href="/pages/stacking.html" class="${this.page === 'stacking' ? 'active' : ''}">Stacking Calculator</a></li>
+                <li><a href="/pages/stacking.html" class="${this.page === 'stacking' ? 'active' : ''}">Stacking Calculator</a></li>
+                <li><a href="/pages/stacking.html" class="${this.page === 'stacking' ? 'active' : ''}">Stacking Calculator</a></li>
+                <li><a href="/pages/FOVpreview.html" class="${this.page === 'FOVpreview' ? 'active' : ''}">FOV Preview</a></li>
             </ul>
 
             <div id="buttons">

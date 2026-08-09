@@ -1,10 +1,12 @@
 #page-items {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    column-gap: 40px;
-    width: 100%;
-    height: calc(100% - 60px);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+
+    justify-items: flex-start;
+    
+}
+
+#page-items page-item {
+    padding: 10px;
 }

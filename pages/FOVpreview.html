@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOV Preview</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/FOVpreview.css">
+    <script src="/js/components/navbar.js"></script>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="/icons/icon-192x192.png" type="image/png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-180x180.png">
+    <link rel="stylesheet" id="redlight_stylesheet" href="/css/redlight.css">
+</head>
+<body>
+    <div class="container">
+        <nav-bar page="FOVpreview"></nav-bar>
+
+
+        <div class="content">
+            <h1>FOV Preview</h1>
+            <hr />
+            <div id="inputs-container">
+                <div id="searchbox">
+                    <input type="text" id="camera_name_searchbox" name="camera_name_searchbox" placeholder="Search for a camera..." autocomplete="off">
+                    <ul id="camera_name_suggestions"></ul>
+                </div>
+
+                <input type="number" id="sensor_width" placeholder="Sensor Width (mm)" step="any" required>
+                <input type="number" id="sensor_height" placeholder="Sensor Height (mm)" step="any" required>
+                
+                <input type="number" id="focal_length" placeholder="Focal Length (mm)" step="any" required>
+                <select id="messier_object">
+                    <option value="">Select a Messier Object</option>
+                </select>
+
+                <button id="calculate-button">Preview</button>
+
+                <img src="" id="fov_preview_image" alt="FOV Preview" style="display: none;" width="400" height="400">
+            </div>
+    </div>
+</body>
+<script src="/js/FOVpreview.js"></script>
+</html>
