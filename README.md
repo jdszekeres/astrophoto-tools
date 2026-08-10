@@ -54,6 +54,7 @@ See how your camera and focal length with capture photos of certain space object
 - [markedjs](https://github.com/markedjs) for [marked](https://github.com/markedjs/marked)
 - [openMVG](https://github.com/openMVG) for [CameraSensorSizeDatabase](https://github.com/openMVG/CameraSensorSizeDatabase)
 - [ESO](www.eso.org) for [Bortle Scale map](https://www.eso.org/public/about-eso/dark-skies-preservation/)
+- [Astronomy Tools](https://astronomy.tools/calculators/field_of_view/) and [Sky Chart](https://www.ap-i.net/skychart/en/start) for photos of Messier objects
 - [Yale Bright Stars Catalog](http://tdc-www.harvard.edu/catalogs/bsc5.html)
 - [Lightpollution.it the Night sky in the world](https://www.lightpollution.it/dmsp/index.html)
 

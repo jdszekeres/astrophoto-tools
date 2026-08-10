@@ -1,6 +1,8 @@
 let stars = [];
 let starNames = {};
 
+let milkyWayData = {};
+
 const planets = [
     Astronomy.Body.Sun,
     Astronomy.Body.Moon,
@@ -19,6 +21,12 @@ const whiteListedStars = new Set([
     2491, //Sirius
 
 ]); //Stars that are part of constellations that are not connected by lines in the constellation_lines array.
+
+async function fetch_milkyway_geojson() {
+    const response = await fetch('/assets/milkyway.json');
+    const data = await response.json();
+    return data;
+}
 
 async function fetch_star_data() {
     const response = await fetch('/assets/star_catalog.json'); //Yale Bright Star Catalog
@@ -44,7 +52,17 @@ async function parse_star_data(data) {
     return filterConstellationStars(data, constellation_lines);
 }
 
+function getAstronomyDate(date) {
+    const astronomyDate = date instanceof Date ? new Date(date.getTime()) : new Date(date);
+    return Number.isFinite(astronomyDate.getTime()) ? astronomyDate : null;
+}
+
 function getStarPositionsAtTime(observer, stars, date) {
+    const astronomyDate = getAstronomyDate(date);
+    if (!astronomyDate) {
+        return [];
+    }
+
     const starPositions = stars.map(star => {
         const ra = star.ra;
         const dec = star.dec;
@@ -53,7 +71,7 @@ function getStarPositionsAtTime(observer, stars, date) {
             console.warn(`Invalid RA/Dec for star ${star.name} (ID: ${star.id})`);
             return null; // Skip this star
         }
-        const starHorizontalCoordinate = Astronomy.Horizon(date, observer, ra, dec);
+        const starHorizontalCoordinate = Astronomy.Horizon(astronomyDate, observer, ra, dec);
         //convert it to polar coordinates for easier plotting
         const r = 90 - starHorizontalCoordinate.altitude; // radius is 90 - altitude
         const theta = starHorizontalCoordinate.azimuth; // angle is azimuth
@@ -178,8 +196,13 @@ function drawConstellationLabels(ctx, centerX, centerY, starObject, constellatio
 }
 
 function drawPlanet(ctx, centerX, centerY, observer, date, planet, maxRadius) {
-    const planetEquatorial = Astronomy.Equator(planet, date, observer, true, true);
-        const planetHorizontal = Astronomy.Horizon(date, observer, planetEquatorial.ra, planetEquatorial.dec);
+    const astronomyDate = getAstronomyDate(date);
+    if (!astronomyDate) {
+        return;
+    }
+
+    const planetEquatorial = Astronomy.Equator(planet, astronomyDate, observer, true, true);
+        const planetHorizontal = Astronomy.Horizon(astronomyDate, observer, planetEquatorial.ra, planetEquatorial.dec);
         const r = 90 - planetHorizontal.altitude;
         const theta = planetHorizontal.azimuth;
 
@@ -196,6 +219,93 @@ function drawPlanet(ctx, centerX, centerY, observer, date, planet, maxRadius) {
             ctx.strokeText(planet, centerX + x + 8, centerY - y - 8); // Offset the text slightly
             ctx.fillText(planet, centerX + x + 8, centerY - y - 8); // Place yellow text on top of the black stroke for better visibility
         }
+}
+
+function _jnowToJ2000(ra_now, dec_now, date) {
+    const astronomyDate = getAstronomyDate(date);
+    if (!astronomyDate) {
+        return null;
+    }
+    
+    // Get forward rotation matrix (J2000 -> JNow)
+    const forwardMat = Astronomy.Rotation_EQJ_EQD(astronomyDate);
+    
+    // Get inverse rotation (JNow -> J2000).
+    const invMat = Astronomy.InverseRotation(forwardMat);
+    
+    // Convert spherical JNow coordinates to an equatorial vector in the JNow frame.
+    const vecNow = Astronomy.VectorFromSphere({ lat: dec_now, lon: ra_now * 15, dist: 1.0 }, astronomyDate);
+    
+    // Rotate vector to J2000 frame
+    const vec2000 = Astronomy.RotateVector(invMat, vecNow);
+    
+    // Convert back to equatorial coordinates (RA/Dec)
+    return Astronomy.EquatorFromVector(vec2000);
+}
+
+// Helper function to transpose a 3x3 rotation matrix in Astronomy Engine
+function transposeMatrix(m) {
+    return {
+        xx: m.xx, yx: m.xy, zx: m.xz,
+        xy: m.yx, yy: m.yy, zy: m.yz,
+        xz: m.zx, yz: m.zy, zz: m.zz
+    };
+}
+
+function drawMilkyWay(ctx, centerX, centerY, milkyWayData, observer, date, maxRadius) {
+    const astronomyDate = getAstronomyDate(date);
+    if (!astronomyDate) {
+        return;
+    }
+
+    milkyWayData.features.forEach(feature => {
+        const polygons = feature.geometry.coordinates;
+        polygons.forEach(coordinates => {
+            let hasPoint = false;
+            ctx.beginPath();
+
+            coordinates.flat().forEach((coord, index) => {
+                const raDegrees = coord[0];
+                const dec = coord[1];
+
+                if (!Number.isFinite(raDegrees) || !Number.isFinite(dec)) {
+                    console.warn(`Invalid RA/Dec in Milky Way data: RA ${raDegrees}, Dec ${dec}`);
+                    return;
+                }
+
+                const astroTime = Astronomy.MakeTime(astronomyDate);
+                const gastHours = Astronomy.SiderealTime(astroTime);
+                const gastDegrees = gastHours * 15;
+                let ra = (gastDegrees + raDegrees) % 360; // Adjust RA based on GAST
+                if (ra < 0) ra += 360; // Ensure RA is positive
+                
+                const hor = Astronomy.Horizon(astronomyDate, observer, ra / 15, dec);
+
+                                if (!Number.isFinite(hor.altitude) || !Number.isFinite(hor.azimuth)) {
+                                    console.warn(`Invalid Horizon coordinates: Altitude ${hor.altitude}, Azimuth ${hor.azimuth}`);
+                                    return;
+                                }
+
+                const r = 90 - hor.altitude;
+                const theta = hor.azimuth;
+
+                
+                const { x, y } = polarToCartesian(r * (maxRadius / 90), theta);
+                if (index === 0) {
+                    ctx.moveTo(centerX + x, centerY - y);
+                } else {
+                    ctx.lineTo(centerX + x, centerY - y);
+                }
+                hasPoint = true;
+
+                ctx.strokeStyle = 'rgba(0, 255, 0, 0.2)';
+                
+        });
+        if (hasPoint) {
+            ctx.stroke();
+        }
+    });
+    });
 }
 
 // function drawConstellationBounds(ctx, centerX, centerY, starObject, maxRadius, observer, date) {
@@ -263,7 +373,13 @@ function drawPlanet(ctx, centerX, centerY, observer, date, planet, maxRadius) {
         
 
 function createStarChart(observer, stars, date) {
-    const starPositions = getStarPositionsAtTime(observer, stars, date);
+    const astronomyDate = getAstronomyDate(date);
+    if (!astronomyDate) {
+        alert('Please enter a valid date and time.');
+        return;
+    }
+
+    const starPositions = getStarPositionsAtTime(observer, stars, astronomyDate);
     const canvas = document.getElementById('starChart');
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -323,8 +439,10 @@ function createStarChart(observer, stars, date) {
 
     //Draw and label planets
     for (const planet of planets) {
-        drawPlanet(ctx, centerX, centerY, observer, date, planet, maxRadius);
+        drawPlanet(ctx, centerX, centerY, observer, astronomyDate, planet, maxRadius);
     }
+
+        drawMilkyWay(ctx, centerX, centerY, milkyWayData, observer, astronomyDate, maxRadius);
 }
 
 document.getElementById('submitbutton').addEventListener('click', async (e) => {
@@ -339,6 +457,11 @@ document.getElementById('submitbutton').addEventListener('click', async (e) => {
 
     if (isNaN(lat) || isNaN(lon)) {
         alert('Please enter valid latitude and longitude values.');
+        return;
+    }
+
+    if (Number.isNaN(date.getTime())) {
+        alert('Please enter a valid date and time.');
         return;
     }
 
@@ -362,6 +485,9 @@ document.getElementById('submitbutton').addEventListener('click', async (e) => {
     const data = await fetch_star_data();
     const parsed_stars = await parse_star_data(data);
     stars = Array.from(parsed_stars).sort((a, b) => a.mag - b.mag); // Sort stars by magnitude
+
+    milkyWayData = await fetch_milkyway_geojson();
+
 
     await fetch_star_names();
 })()
