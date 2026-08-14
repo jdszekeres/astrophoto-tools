@@ -71,7 +71,7 @@ class Navbar extends HTMLElement {
                 background-color: #4CAF50;
                 }
 
-                #install_button, #red_light_button {
+                #install_button, #red_light_button, #guide_button {
                 margin: 20px;
                 padding: 10px;
                 background-color: #4CAF50;
@@ -104,14 +104,12 @@ class Navbar extends HTMLElement {
                 <li><a href="/pages/400rule.html" class="${this.page === '400rule' ? 'active' : ''}">400 Rule</a></li>
                 <li><a href="/pages/starchart.html" class="${this.page === 'starchart' ? 'active' : ''}">Star Chart</a></li>
                 <li><a href="/pages/stacking.html" class="${this.page === 'stacking' ? 'active' : ''}">Stacking Calculator</a></li>
-                <li><a href="/pages/stacking.html" class="${this.page === 'stacking' ? 'active' : ''}">Stacking Calculator</a></li>
-                <li><a href="/pages/stacking.html" class="${this.page === 'stacking' ? 'active' : ''}">Stacking Calculator</a></li>
-                <li><a href="/pages/stacking.html" class="${this.page === 'stacking' ? 'active' : ''}">Stacking Calculator</a></li>
-                <li><a href="/pages/stacking.html" class="${this.page === 'stacking' ? 'active' : ''}">Stacking Calculator</a></li>
                 <li><a href="/pages/FOVpreview.html" class="${this.page === 'FOVpreview' ? 'active' : ''}">FOV Preview</a></li>
+                <li><a href="/pages/hyperfocal_distance.html" class="${this.page === 'hyperfocal_distance' ? 'active' : ''}">Hyperfocal Distance Calculator</a></li>
             </ul>
 
             <div id="buttons">
+                <button id="guide_button" type="button" onclick="window.location.href='/pages/guide.html'">Guide</button>
                 <button id="red_light_button" type="button">Red Light Mode</button>
                 <button id="install_button" type="button" style="display:none;">Install App for Offline Use</button>
             </div>

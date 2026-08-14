@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astrophotography Tools Guide</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/components/navbar.js"></script>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="/icons/icon-192x192.png" type="image/png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-180x180.png">
+    <link rel="stylesheet" id="redlight_stylesheet" href="/css/redlight.css">
+</head>
+<body>
+    <div class="container">
+        <nav-bar page="guide"></nav-bar>
+
+        <div class="content" id="content">
+            
+        </div>
+    </div>
+</body>
+<script src="/js/libraries/marked.umd.js"></script>
+<script>
+document.getElementById('content').innerHTML = marked.parse(`
+# Astrophotography Tools Guide
+Greetings earthlings, welcome to the Astrophotography tools guide! Whether this is your first time doing astrophotography or your thousandth, this guide will help you use these tools to capture the night sky in all its glory.
+
+## Before we begin, a few key terms:
+- **Exposure**: The amount of light that reaches your camera's sensor. A longer exposure time allows more light to reach the sensor, resulting in a brighter image.
+- **ISO**: The sensitivity of your camera's sensor to light. A higher ISO setting allows you to capture more light, but can also introduce more noise into your image.
+- **Aperture**: The size of the opening in your camera's lens that allows light to pass through. A larger aperture (smaller f-number) allows more light to reach the sensor, while a smaller aperture (larger f-number) allows less light.
+- **Shutter Speed**: The amount of time the camera's shutter is open to allow light to reach the sensor. A longer shutter speed allows more light to reach the sensor, while a shorter shutter speed allows less light.
+- **Focal Length**: The distance between the camera's lens and the image sensor. A longer focal length allows you to zoom in on distant objects, while a shorter focal length allows you to capture a wider field of view.
+- **Noise**: Random variations in image color due to a **LACK OF SIGNAL/LIGHT**. It is not inherently caused by high ISO, but high ISO can amplify noise that is already present in the image.
+- **Stacking**: The process of combining multiple images of the same scene to reduce noise and improve image quality. By taking multiple exposures and stacking them together, you can create a final image that is brighter and clearer than any single exposure.
+
+## Recommended Settings
+This page will help you find the recommended settings for your camera and show you some secret settings to help you get better results. And if you don't have a fancy smansy camera, don't worry! This page will also help you find the best settings for your phone camera.
+
+## Equivalent Exposure Calculator
+This page lets you find different settings that will give you the same exposure (The photo will be just as bright)
+
+**Why you might use it**: If you're playing around with how bright you want your photo to be, it would be annoying to wait 30s (or however long your exposure is) to see if the photo is well lit. Instead, crank up the ISO and take a faster shot, then when you have the right exposure, you can use the equivalent exposure calculator to find the settings that will give you the same exposure but with less noise.
+
+## Bortle Scale Finder
+This page will help you find the Bortle Scale for your location. The Bortle Scale is a scale that measures the darkness of the night sky. It ranges from 1 (the darkest) to 9 (the brightest).
+
+**Why you might use it**: Before you go out and take photos, it is important to know how dark the sky is at your location. Along with the Bortle Scale Reference page, this page will help you find out if your location is dark enough to take photos.
+
+## Bortle Scale Reference
+This page shows you how the milky way looks in different Bortle Scale locations. It also shows you appoximately what you can see at each location.
+
+**Why you might use it**: To see if a location is dark enough to take photos.
+
+## Sun and Moon Position
+This shows you when the sun and moon will rise and set, as well as the moon phase.
+
+**Why you might use it**: A bright moon, or taking photos too early after the sun sets can add unwanted light to your photos. This page will help you find the best time to take photos.
+
+## 400 Rule Calculator
+This page will help you find the maximum exposure time you can use without getting star trails.
+
+**Why you might use it**: If you take photos of the stars you need to make sure your exposure time is short enough that they don't blur into trails with the rotation of the earth.
+
+## Star Chart
+This page will show you a star chart for your location. It will show you the constellations and the milky way.
+
+**Why you might use it**: This page will show you exactly what you will see in the sky at a given time, allowing you to plan out compositions ahead of time.
+
+## Stacking Calculator
+This page will help you find out how much better your photos will be if you stack multiple exposures.
+
+**Why you might use it**: Taking multiple exposures of the night sky and stacking them together can help you reduce noise in your photos.
+
+## FOV Preview
+This page will show you how your camera and lens will frame objects in the sky.
+
+**Why you might use it**: This page will help you figure out what deep space objects you can capture with your camera and lens.
+
+## Hyperfocal Distance Calculator
+This page will help you find the hyperfocal distance for your camera and lens.
+
+**Why you might use it**: The hyperfocal distance is the closest you can focus and keep objects infintely far away in focus, allowing you to maximize what is in focus.
+
+`);
+</script>
+</html>

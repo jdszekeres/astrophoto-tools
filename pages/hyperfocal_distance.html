@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyperfocal Distance Calculator</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/hyperfocal_distance.css">
+    <script src="/js/components/navbar.js"></script>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="/icons/icon-192x192.png" type="image/png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-180x180.png">
+    <link rel="stylesheet" id="redlight_stylesheet" href="/css/redlight.css">
+</head>
+<body>
+    <div class="container">
+        <nav-bar page="hyperfocal_distance"></nav-bar>
+
+
+        <div class="content">
+            <h1>Hyperfocal Distance Calculator</h1>
+            <hr />
+            <div id="inputs-container">
+                <input type="number" id="focal_length" placeholder="Focal Length (mm)" step="any" required>
+                <input type="number" id="aperture" placeholder="Aperture (f-number)" step="any" required>
+                <div class="br"></div>
+                <br>
+                <div id="checkbox">
+                    <input type="checkbox" id="is_apsc" name="is_apsc">
+                    <label for="is_apsc">Is APS-C Sensor?</label>
+                </div>
+                <div class="br"></div>
+                <div class="br"></div>
+                <br>
+
+                <button id="calculate-button">Calculate</button>
+
+            </div>
+
+            <div id="info-section">
+                <p>
+                    The hyperfocal distance is the closest distance at which a lens can be focused while keeping objects at an infinite distance away acceptably sharp. When the lens is focused at this distance, all objects from half of the hyperfocal distance to infinity will be in focus. This calculator helps you determine the hyperfocal distance based on your camera's sensor type, focal length, and aperture.
+                </p>
+            </div>
+
+            <div id="results-container" style="display: none;">
+                <h2>
+                    Hyperfocal Distance:
+                    <span id="hyperfocal_distance_result"></span>
+                </h2>
+
+            </div>
+    </div>
+</body>
+<script src="/js/hyperfocal_distance.js"></script>
+</html>
