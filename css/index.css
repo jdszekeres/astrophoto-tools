@@ -1,6 +1,6 @@
 #page-items {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit,  calc(30vw - 100px));
     gap: 20px;
 
     justify-items: flex-start;

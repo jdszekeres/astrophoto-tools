@@ -188,7 +188,6 @@ function drawConstellationLabels(ctx, centerX, centerY, starObject, constellatio
         return acc;
     }, {})).forEach(([constellationName, { x, y }]) => {
 
-        console.log(`Labeling constellation ${constellationName} at (${x}, ${y})`);
         ctx.font = '12px Arial';
         ctx.fillStyle = 'blue';
         ctx.fillText(constellationName, centerX + x + 5, centerY - y - 5); // Offset the text slightly
@@ -258,7 +257,7 @@ function drawMilkyWay(ctx, centerX, centerY, milkyWayData, observer, date, maxRa
         return;
     }
 
-    milkyWayData.features.forEach(feature => {
+    milkyWayData.features.forEach((feature, featureIndex) => {
         const polygons = feature.geometry.coordinates;
         polygons.forEach(coordinates => {
             let hasPoint = false;
@@ -298,11 +297,35 @@ function drawMilkyWay(ctx, centerX, centerY, milkyWayData, observer, date, maxRa
                 }
                 hasPoint = true;
 
-                ctx.strokeStyle = 'rgba(0, 255, 0, 0.2)';
+                switch (featureIndex) {
+                    case 0: // outermost boundary
+                        ctx.fillStyle = 'rgb(154, 97, 40, 0.2)';
+                        break;
+                    case 1: // inner boundary
+                        ctx.fillStyle = 'rgb(93, 70, 194, 0.3)';
+                        ctx.strokeStyle = 'rgb(93, 70, 194, 0)';
+                        break;
+
+                    case 2: // core region
+                    case 3:
+                    case 4:
+                        ctx.fillStyle = 'rgb(113, 41, 149, 0.5)';
+                        ctx.strokeStyle = 'rgb(113, 41, 149, 0)';
+                        break;
+
+                    default:
+                        ctx.fillStyle = 'rgba(255, 255, 255, 1)';
+                        ctx.strokeStyle = 'rgba(255, 255, 255, 0)';
+                        break;
+                }
+
+                
+
                 
         });
         if (hasPoint) {
-            ctx.stroke();
+            ctx.fill();
+            
         }
     });
     });

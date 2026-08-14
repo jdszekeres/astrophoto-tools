@@ -9,8 +9,8 @@ class PageItem extends HTMLElement {
     connectedCallback() {
         this.render();
         this.style.display = 'block';
-        this.style.width = 'min(30vw, 30vh)';
-        this.style.height = 'min(30vw, 30vh)';
+        this.style.width = 'min(calc(30vw - 20px), calc(30vh - 20px))';
+        this.style.height = 'min(calc(30vw - 20px), calc(30vh - 20px))';
     }
 
     render() {
@@ -21,8 +21,8 @@ class PageItem extends HTMLElement {
                 border-radius: 5px;
                 padding: 10px;
                 margin: 10px 0;
-                width: 100%;
-                height: 100%;
+                width: min(calc(30vw - 20px), calc(30vh - 20px));
+                height: min(calc(30vw - 20px), calc(30vh - 20px));
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
