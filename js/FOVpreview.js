@@ -101,6 +101,17 @@ function createFOVPreview() {
     messierImage.src = `/assets/messier/${messierObject.toLowerCase()}_2deg.webp`;
     messierImage.onload = function() {
         ctx.drawImage(messierImage, 0, 0, canvas.width, canvas.height);
+        for (let i = 0; i < canvas.width * canvas.height; i++) {
+            const x = i % canvas.width;
+            const y = Math.floor(i / canvas.width);
+            const pixel = ctx.getImageData(x, y, 1, 1).data;
+            if (pixel[0] === 0 && pixel[1] === 0 && pixel[2] === 0) {
+                // To save space, the we store the image as pure black and white, so to make it look the same, we replace the black pixels with their original blue color
+                ctx.fillStyle = "#010120";
+                ctx.fillRect(x, y, 1, 1);
+            }
+        }
+
         ctx.strokeStyle = "red";
         ctx.lineWidth = 2;
         ctx.strokeRect(

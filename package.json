@@ -1,0 +1,10 @@
+{
+  "name": "astronomy-tools",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "esbuild js/*.js js/components/*.js css/*.css sw.js --minify --allow-overwrite --outdir=. --outbase=."
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  }
+}

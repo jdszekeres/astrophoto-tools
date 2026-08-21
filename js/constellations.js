@@ -29,7 +29,7 @@ function parseConstellationLines(fileContent) {
             continue; // Skip empty lines and comments
         }
 
-        const [name, starsSegments] = trimmedLine.split(' = ');
+        const [name, starsSegments] = trimmedLine.split('=');
         
         const starsSegmentsArray = starsSegments.split(';').map(JSON.parse);
 
