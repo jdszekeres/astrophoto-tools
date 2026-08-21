@@ -89,9 +89,16 @@ class Navbar extends HTMLElement {
             @media (max-width: 768px) {
                 nav {
                     justify-content: flex-start;
-                    height: auto;
+                    height: 100vh;
                     position: relative;
+
+                    font-size: 13px;
                 }
+                #install_button, #red_light_button, #guide_button {
+                    width: 100%;
+                    margin: 5px 0;
+                }
+            }
         </style>
         <nav>
             <ul>

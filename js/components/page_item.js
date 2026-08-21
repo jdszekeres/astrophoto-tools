@@ -9,8 +9,13 @@ class PageItem extends HTMLElement {
     connectedCallback() {
         this.render();
         this.style.display = 'block';
-        this.style.width = 'min(calc(30vw - 20px), calc(30vh - 20px))';
-        this.style.height = 'min(calc(30vw - 20px), calc(30vh - 20px))';
+        if (window.innerWidth <= 768) {
+            this.style.width = '80vw';
+            this.style.height = 'auto';
+        } else {
+            this.style.width = 'min(calc(30vw - 20px), calc(30vh - 20px))';
+            this.style.height = 'min(calc(30vw - 20px), calc(30vh - 20px))';
+        }
     }
 
     render() {
@@ -38,6 +43,14 @@ class PageItem extends HTMLElement {
             .page-item a {
                 display: inline-block;
                 margin: 0px;
+            }
+
+            @media (max-width: 768px) {
+                .page-item {
+                    width: calc(80vw - 40px);
+                    height: auto;
+                }
+            }
         </style>
         <div class="page-item">
             <h2>${this.name}</h2>

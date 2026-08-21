@@ -4,9 +4,28 @@
     gap: 20px;
 
     justify-items: flex-start;
+    width: 100%;
+    height: 100%;
     
 }
 
 #page-items page-item {
     padding: 10px;
+}
+
+@media (max-width: 768px) {
+    #page-items {
+        grid-template-columns: repeat(auto-fit,  calc(80vw));
+        justify-items: left;
+
+        overflow-x: hidden;
+    }
+    .content {
+        padding: 0px;
+    }
+    #page-items page-item {
+        width: calc(80vw - 40px) !important;
+        height: auto;
+        padding: 0px;
+    }
 }
