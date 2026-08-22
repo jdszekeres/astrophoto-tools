@@ -13,6 +13,13 @@ input {
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    color: #FFF8E7;
+    background-color: #1d1822;
+}
+
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    color-scheme: light;
+    filter: invert(1);
 }
 
 #current-location-button {
@@ -22,6 +29,7 @@ input {
     border: 1px solid #ccc;
     border-radius: 4px;
     background-color: transparent;
+    color: #FFF8E7;
 }
 
 button[type="submit"] {

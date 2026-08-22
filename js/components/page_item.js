@@ -9,13 +9,6 @@ class PageItem extends HTMLElement {
     connectedCallback() {
         this.render();
         this.style.display = 'block';
-        if (window.innerWidth <= 768) {
-            this.style.width = '80vw';
-            this.style.height = 'auto';
-        } else {
-            this.style.width = 'min(calc(30vw - 20px), calc(30vh - 20px))';
-            this.style.height = 'min(calc(30vw - 20px), calc(30vh - 20px))';
-        }
     }
 
     render() {
@@ -31,6 +24,8 @@ class PageItem extends HTMLElement {
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
+
+                cursor: pointer;
             }
             .page-item h2 {
                 margin: 0px;
@@ -52,7 +47,7 @@ class PageItem extends HTMLElement {
                 }
             }
         </style>
-        <div class="page-item">
+        <div class="page-item" onclick="window.location.href='pages/${this.link}'">
             <h2>${this.name}</h2>
             <p>${this.description}</p>
             <a href="pages/${this.link}">Go to page</a>

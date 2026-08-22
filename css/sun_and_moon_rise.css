@@ -12,6 +12,8 @@ input {
     border: 1px solid #ccc;
     border-radius: 4px;
     margin: 5px;
+    color: #FFF8E7;
+    background-color: #1d1822;
 }
 
 #current-location-button {
@@ -22,6 +24,12 @@ input {
     border-radius: 4px;
     background-color: transparent;
     margin-top: 10px;
+    color: #FFF8E7;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    color-scheme: light;
+    filter: invert(1);
 }
 
 #submit-button {

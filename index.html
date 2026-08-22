@@ -39,5 +39,15 @@
         </div>
     </div>
 </body>
+<script src="js/addStars.js"></script>
+
+<script>
+    // Dont have them all bounce in unision
+    for (let i = 0; i < document.querySelectorAll("page-item").length; i++) {
+        const pageItem = document.querySelectorAll("page-item")[i];
+        pageItem.style.animationDelay = `${Math.random() * 10}s`;
+    }x
+
+</script>
 
 </html>

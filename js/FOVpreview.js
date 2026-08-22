@@ -100,25 +100,37 @@ function createFOVPreview() {
     const messierImage = new Image();
     messierImage.src = `/assets/messier/${messierObject.toLowerCase()}_2deg.webp`;
     messierImage.onload = function() {
+        // 1. Draw the initial image
         ctx.drawImage(messierImage, 0, 0, canvas.width, canvas.height);
-        for (let i = 0; i < canvas.width * canvas.height; i++) {
-            const x = i % canvas.width;
-            const y = Math.floor(i / canvas.width);
-            const pixel = ctx.getImageData(x, y, 1, 1).data;
-            if (pixel[0] === 0 && pixel[1] === 0 && pixel[2] === 0) {
-                // To save space, the we store the image as pure black and white, so to make it look the same, we replace the black pixels with their original blue color
-                ctx.fillStyle = "#010120";
-                ctx.fillRect(x, y, 1, 1);
+        
+        // 2. Extract ALL pixels at once (Massive speedup)
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const data = imageData.data;
+
+        // 3. Process the flat array in memory instantly
+        // (Loops by 4 because each pixel has R, G, B, A values)
+        for (let i = 0; i < data.length; i += 4) {
+            // Check if R, G, and B are all 0 (Pure Black)
+            if (data[i] <= 10 && data[i + 1] <= 10 && data[i + 2] <= 10) {
+                // Replace with #010120 (R: 1, G: 1, B: 32)
+                data[i]     = 1;  // Red
+                data[i + 1] = 1;  // Green
+                data[i + 2] = 32; // Blue
+                // data[i + 3] stays the same (Alpha/Opacity)
             }
         }
 
+        // 4. Write ALL modified pixels back in one single shot
+        ctx.putImageData(imageData, 0, 0);
+
+        // 5. Draw your UI overlays over the newly updated background
         ctx.strokeStyle = "red";
         ctx.lineWidth = 2;
         ctx.strokeRect(
-            canvas.width * (1 - rectSize[1]) / 2, // Center the rectangle horizontally
-            canvas.height * (1 - rectSize[0]) / 2, // Center the rectangle vertically
-            canvas.width * rectSize[1], // Width of the rectangle
-            canvas.height * rectSize[0]  // Height of the rectangle
+            canvas.width * (1 - rectSize[1]) / 2, 
+            canvas.height * (1 - rectSize[0]) / 2, 
+            canvas.width * rectSize[1], 
+            canvas.height * rectSize[0]  
         );
 
         ctx.font = "24px Arial";
@@ -128,8 +140,6 @@ function createFOVPreview() {
             ctx.strokeText("Warning: FOV exceeds 2 degrees!", 10, 45);
             ctx.strokeText("Camera will capture more than the previewed area.", 10, 70);
         }
-
-        
 
         const base64Image = canvas.toDataURL("image/png");
         document.getElementById("fov_preview_image").src = base64Image;

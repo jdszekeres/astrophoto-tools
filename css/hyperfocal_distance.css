@@ -12,6 +12,12 @@ input:not([type="checkbox"]) {
 	font-size: 16px;
 	border: 1px solid #ccc;
 	border-radius: 4px;
+
+    color: #FFF8E7;
+    background-color: #1d1822;
+}
+input:not([type="checkbox"]):first-child {
+    margin-right: 10px;
 }
 
 #checkbox-container {
