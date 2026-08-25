@@ -71,7 +71,7 @@ input, select {
 	width: 200px;
 }
 
-#focal_length, #messier_object {
+#focal_length, #celestial_object {
     width: 30vw !important;
 }
 
