@@ -19,13 +19,13 @@
         <div class="content">
             <h1>Bortle Scale</h1>
             
-            <form>
+            <div>
                 <input type="number" id="lat" placeholder="Latitude" step="any" required>
                 <input type="number" id="lon" placeholder="Longitude" step="any" required>
                 <button type="submit" id="submitbutton">Get Bortle Scale</button>
                 <br>
                 <button id="current-location-button">Use Current Location</button>
-            </form>
+            </div>
             
 
             <br>
@@ -34,7 +34,7 @@
                 <h2>Bortle Scale: <span id="bortle-value">-</span></h2>
                 <h2>Sky Brightness: <span id="brightness-value">-</span> mag/arcsec²</h2>
 
-                <img id="sky-image" src="" alt="Sky Image" style="display: none; width: 300px; height: 300px;">
+                <img id="sky-image" src="" alt="Sky Image" style="display: none; width: 300px; height: 300px; z-index: 3000;">
             </div>
         </div>
     </div>

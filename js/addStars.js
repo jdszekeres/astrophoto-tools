@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
         comet.classList.add('comet');
         comet.classList.add('star');
 
-        const size = Math.random() * 10 + 2; // Random size between 2 and 5
+        const size = Math.random() * 5 + 2; // Random size between 2 and 5
         comet.style.width = `${size}px`;
         comet.style.height = `${size}px`;
 
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
         comet.style.zIndex = '0'; // Ensure comet is above stars
 
         //add moving animation to comet
-        comet.style.animation = `moveComet 2s linear forwards`;
+        comet.style.animation = `moveComet 1.5s linear forwards`;
 
         content.appendChild(comet);
 

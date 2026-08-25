@@ -7,7 +7,7 @@ class NightSky {
 
 
         this.image = new Image();
-        this.image.src = '/assets/mondo_ridotto0p25.webp';
+        this.image.src = '/assets/bortle.webp';
         this.image.onload = () => {
             this.canvas.width = this.image.naturalWidth;
             this.canvas.height = this.image.naturalHeight;
@@ -19,54 +19,68 @@ class NightSky {
     }
 
     legend = [
-    { rgb: [14.9, 14.9, 14.9], ratio: 0.11 },
-    { rgb: [0, 0, 255], ratio: 0.22 },
-    { rgb: [0, 255, 0], ratio: 0.67 },
-    { rgb: [255, 255, 0], ratio: 2 },
-    { rgb: [255, 137, 0], ratio: 6 },
-    { rgb: [255, 0, 0], ratio: 9 },
-    { rgb: [255, 255, 255], ratio: 40 }
+        { rgb: [255, 255, 255], sqm: 20.7951012 },
+        { rgb: [255, 0, 0], sqm: 21.0858392 },
+        {rgb: [255, 152, 0], sqm: 21.1585237 },
+        {rgb: [255, 255, 0], sqm: 21.2312082 },
+        {rgb: [83, 255, 0], sqm: 21.3038928 },
+        {rgb: [42, 255, 42], sqm: 21.3765773 },
+        {rgb: [57, 173, 115], sqm: 21.4492618 },
+        {rgb: [48, 96, 167], sqm: 21.5219463 },
+        {rgb: [48, 39, 137], sqm: 21.5946308 },
+        {rgb: [48, 18, 59], sqm: 21.6673153 },
+        {rgb: [0, 0, 0], sqm: 21.7400000 }
     ];
 
     _colorDistance(a, b) {
-    return Math.sqrt(
-        (a[0]-b[0])**2 +
-        (a[1]-b[1])**2 +
-        (a[2]-b[2])**2
-    );
-}
+        return Math.sqrt(
+            (a[0]-b[0])**2 +
+            (a[1]-b[1])**2 +
+            (a[2]-b[2])**2
+        );
+    }
 
-    _getRatioFromPixel(rgb) {
-        let best = this.legend[0];
-        let bestDist = Infinity;
-
-        for (const item of this.legend) {
-            const d = this._colorDistance(rgb, item.rgb);
-            if (d < bestDist) {
-                bestDist = d;
-                best = item;
+    _getSQMFromRGB(rgb) {
+        let closest = this.legend[0];
+        let minDistance = this._colorDistance(rgb, closest.rgb);
+        for (let i = 1; i < this.legend.length; i++) {
+            const distance = this._colorDistance(rgb, this.legend[i].rgb);
+            if (distance < minDistance) {
+                minDistance = distance;
+                closest = this.legend[i];
             }
         }
 
-        return best.ratio;
+        // It's off, so we need to fix it
+        // y=0.0000274652 * x^{4.41027} desmos generated
+        const sqm = 0.0000274652 * Math.pow(closest.sqm, 4.41027);
+
+        return sqm;
     }
 
-    _latLonToPixel(lat, lon) {
-        const W = this.canvas.width;
-        const H = this.canvas.height;
+    geoToPixel(lon, lat) {
+        // TFW parameters from your input:
 
-        // longitude fit (from regression)
-        const x = (lon + 126.44) / 0.03382;
+        const A = 0.0165006827291372;   // X-scale (longitude degree width per pixel)
+        const D = 0.00000000;   // Rotation term for X (usually 0)
+        const B = 0.00000000;   // Rotation term for Y (usually 0)
+        const E = -0.0165006827291372;  // Y-scale (latitude degree height per pixel, negative)
+        const C = -180.01419679352227377;// X-coordinate of the center of the upper-left pixel (origin longitude)
+        const F = 74.98352006495314015;  // Y-coordinate of the center of the upper-left pixel (origin latitude)
 
-        // latitude fit
-        const y = (-20.28 * lat) + 1862.4;
+        // Calculate pixel coordinates
+        const x = (lon - C) / A;
+        const y = (lat - F) / E;
 
-        return { x, y };
+        return {
+            x: Math.round(x),
+            y: Math.round(y)
+        };
     }
 
     getBrightness(lat, lon) {
         //convert lat and lon to pixel coordinates
-        const { x, y } = this._latLonToPixel(lat, lon);
+        const { x, y } = this.geoToPixel(lon, lat);
 
         console.log('Getting brightness for lat:', lat, 'lon:', lon, 'pixel coordinates:', x, y);
 
@@ -76,9 +90,10 @@ class NightSky {
         const b = pixelData[2];
 
         const rgb = [r, g, b];
-        const ratio = this._getRatioFromPixel(rgb);
 
-        const SQM = 21.58 - 2.5 * Math.log10(ratio);
+        console.log('Pixel RGB:', rgb);
+
+        const SQM = this._getSQMFromRGB(rgb);
 
         return SQM;
     }
@@ -98,12 +113,32 @@ class NightSky {
     getImageOfCoordinate(lat, lon) {
         const size = 150; // size of the square to extract
 
-        const { x, y } = this._latLonToPixel(lat, lon);
+        const { x, y } = this.geoToPixel(lon, lat);
         const tempCanvas = document.createElement('canvas');
         const tempCtx = tempCanvas.getContext('2d');
         tempCanvas.width = size;
         tempCanvas.height = size;
+        
+
         tempCtx.drawImage(this.canvas, x - size/2, y - size/2, size, size, 0, 0, size, size);
+        
+        // Map every pixel to the closest color in the legend to prevent antialiasing issues
+        const imageData = tempCtx.getImageData(0, 0, size, size);
+        const data = imageData.data;
+        for (let i = 0; i < data.length; i += 4) {
+            const rgb = [data[i], data[i + 1], data[i + 2]];
+            const closest = this.legend.reduce((prev, curr) => {
+                const prevDistance = this._colorDistance(rgb, prev.rgb);
+                const currDistance = this._colorDistance(rgb, curr.rgb);
+                return (currDistance < prevDistance) ? curr : prev;
+            });
+            data[i] = closest.rgb[0];
+            data[i + 1] = closest.rgb[1];
+            data[i + 2] = closest.rgb[2];
+        }
+
+        tempCtx.putImageData(imageData, 0, 0);
+        
         tempCtx.beginPath();
         tempCtx.strokeStyle = 'black';
         tempCtx.lineWidth = 2;
