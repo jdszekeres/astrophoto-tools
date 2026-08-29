@@ -90,3 +90,7 @@ html.red-light-mode .page-item {
 html.red-light-mode nav ul {
     scrollbar-color: black #800000 !important;
 }
+
+html.red-light-mode .star {
+    display: none !important;
+}
